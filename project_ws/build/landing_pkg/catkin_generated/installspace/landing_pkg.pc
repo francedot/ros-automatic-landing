@@ -1,8 +1,0 @@
-prefix=/home/francesco/landing/project_ws/install
-
-Name: landing_pkg
-Description: Description of landing_pkg
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/francesco/landing/project_ws/install/lib 
-Requires: message_runtime
