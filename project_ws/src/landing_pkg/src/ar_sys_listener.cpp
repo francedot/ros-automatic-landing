@@ -17,6 +17,8 @@ void imageRawReceived(const Image &msg) {
 
 	// auto a = 8 + 9; auto not upported by ros gcc
 
+	// Simple commit
+
 	ROS_INFO("Received!");
 
 	Header header = msg.header;
