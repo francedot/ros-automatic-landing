@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/francesco/project_ws/src
+CMAKE_SOURCE_DIR = /home/francesco/landing/project_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/francesco/project_ws/build
+CMAKE_BINARY_DIR = /home/francesco/landing/project_ws/build
 
 # Include any dependencies generated for this target.
 include landing_pkg/CMakeFiles/ar_sys_listener.dir/depend.make
@@ -50,18 +50,18 @@ include landing_pkg/CMakeFiles/ar_sys_listener.dir/progress.make
 include landing_pkg/CMakeFiles/ar_sys_listener.dir/flags.make
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o: landing_pkg/CMakeFiles/ar_sys_listener.dir/flags.make
-landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o: /home/francesco/project_ws/src/landing_pkg/src/ar_sys_listener.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/francesco/project_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
+landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o: /home/francesco/landing/project_ws/src/landing_pkg/src/ar_sys_listener.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/francesco/landing/project_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o"
-	cd /home/francesco/project_ws/build/landing_pkg && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o -c /home/francesco/project_ws/src/landing_pkg/src/ar_sys_listener.cpp
+	cd /home/francesco/landing/project_ws/build/landing_pkg && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o -c /home/francesco/landing/project_ws/src/landing_pkg/src/ar_sys_listener.cpp
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.i"
-	cd /home/francesco/project_ws/build/landing_pkg && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/francesco/project_ws/src/landing_pkg/src/ar_sys_listener.cpp > CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.i
+	cd /home/francesco/landing/project_ws/build/landing_pkg && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/francesco/landing/project_ws/src/landing_pkg/src/ar_sys_listener.cpp > CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.i
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.s"
-	cd /home/francesco/project_ws/build/landing_pkg && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/francesco/project_ws/src/landing_pkg/src/ar_sys_listener.cpp -o CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.s
+	cd /home/francesco/landing/project_ws/build/landing_pkg && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/francesco/landing/project_ws/src/landing_pkg/src/ar_sys_listener.cpp -o CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.s
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o.requires:
 .PHONY : landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o.requires
@@ -79,41 +79,41 @@ ar_sys_listener_OBJECTS = \
 # External object files for target ar_sys_listener
 ar_sys_listener_EXTERNAL_OBJECTS =
 
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: landing_pkg/CMakeFiles/ar_sys_listener.dir/build.make
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libroscpp.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_signals.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librosconsole.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librosconsole_log4cxx.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librosconsole_backend_interface.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/liblog4cxx.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_regex.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libxmlrpcpp.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libroscpp_serialization.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librostime.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libcpp_common.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_system.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_thread.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libpthread.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so
-/home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener: landing_pkg/CMakeFiles/ar_sys_listener.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener"
-	cd /home/francesco/project_ws/build/landing_pkg && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ar_sys_listener.dir/link.txt --verbose=$(VERBOSE)
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: landing_pkg/CMakeFiles/ar_sys_listener.dir/build.make
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libroscpp.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_signals.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librosconsole.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librosconsole_log4cxx.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librosconsole_backend_interface.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/liblog4cxx.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_regex.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libxmlrpcpp.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libroscpp_serialization.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/librostime.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_date_time.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /opt/ros/indigo/lib/libcpp_common.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_system.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libboost_thread.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libpthread.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so
+/home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener: landing_pkg/CMakeFiles/ar_sys_listener.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener"
+	cd /home/francesco/landing/project_ws/build/landing_pkg && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ar_sys_listener.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-landing_pkg/CMakeFiles/ar_sys_listener.dir/build: /home/francesco/project_ws/devel/lib/landing_pkg/ar_sys_listener
+landing_pkg/CMakeFiles/ar_sys_listener.dir/build: /home/francesco/landing/project_ws/devel/lib/landing_pkg/ar_sys_listener
 .PHONY : landing_pkg/CMakeFiles/ar_sys_listener.dir/build
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/requires: landing_pkg/CMakeFiles/ar_sys_listener.dir/src/ar_sys_listener.cpp.o.requires
 .PHONY : landing_pkg/CMakeFiles/ar_sys_listener.dir/requires
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/clean:
-	cd /home/francesco/project_ws/build/landing_pkg && $(CMAKE_COMMAND) -P CMakeFiles/ar_sys_listener.dir/cmake_clean.cmake
+	cd /home/francesco/landing/project_ws/build/landing_pkg && $(CMAKE_COMMAND) -P CMakeFiles/ar_sys_listener.dir/cmake_clean.cmake
 .PHONY : landing_pkg/CMakeFiles/ar_sys_listener.dir/clean
 
 landing_pkg/CMakeFiles/ar_sys_listener.dir/depend:
-	cd /home/francesco/project_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/francesco/project_ws/src /home/francesco/project_ws/src/landing_pkg /home/francesco/project_ws/build /home/francesco/project_ws/build/landing_pkg /home/francesco/project_ws/build/landing_pkg/CMakeFiles/ar_sys_listener.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/francesco/landing/project_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/francesco/landing/project_ws/src /home/francesco/landing/project_ws/src/landing_pkg /home/francesco/landing/project_ws/build /home/francesco/landing/project_ws/build/landing_pkg /home/francesco/landing/project_ws/build/landing_pkg/CMakeFiles/ar_sys_listener.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : landing_pkg/CMakeFiles/ar_sys_listener.dir/depend
 

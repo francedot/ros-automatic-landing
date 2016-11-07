@@ -35,10 +35,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/francesco/project_ws/src
+CMAKE_SOURCE_DIR = /home/francesco/landing/project_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/francesco/project_ws/build
+CMAKE_BINARY_DIR = /home/francesco/landing/project_ws/build
 
 # Utility rule file for landing_pkg_genpy.
 
@@ -56,10 +56,10 @@ landing_pkg/CMakeFiles/landing_pkg_genpy.dir/build: landing_pkg_genpy
 .PHONY : landing_pkg/CMakeFiles/landing_pkg_genpy.dir/build
 
 landing_pkg/CMakeFiles/landing_pkg_genpy.dir/clean:
-	cd /home/francesco/project_ws/build/landing_pkg && $(CMAKE_COMMAND) -P CMakeFiles/landing_pkg_genpy.dir/cmake_clean.cmake
+	cd /home/francesco/landing/project_ws/build/landing_pkg && $(CMAKE_COMMAND) -P CMakeFiles/landing_pkg_genpy.dir/cmake_clean.cmake
 .PHONY : landing_pkg/CMakeFiles/landing_pkg_genpy.dir/clean
 
 landing_pkg/CMakeFiles/landing_pkg_genpy.dir/depend:
-	cd /home/francesco/project_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/francesco/project_ws/src /home/francesco/project_ws/src/landing_pkg /home/francesco/project_ws/build /home/francesco/project_ws/build/landing_pkg /home/francesco/project_ws/build/landing_pkg/CMakeFiles/landing_pkg_genpy.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/francesco/landing/project_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/francesco/landing/project_ws/src /home/francesco/landing/project_ws/src/landing_pkg /home/francesco/landing/project_ws/build /home/francesco/landing/project_ws/build/landing_pkg /home/francesco/landing/project_ws/build/landing_pkg/CMakeFiles/landing_pkg_genpy.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : landing_pkg/CMakeFiles/landing_pkg_genpy.dir/depend
 
