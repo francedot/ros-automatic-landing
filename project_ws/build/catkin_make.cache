@@ -1,0 +1,2 @@
+landing_pkg
+-DCATKIN_DEVEL_PREFIX=/home/francesco/project_ws/devel -DCMAKE_INSTALL_PREFIX=/home/francesco/project_ws/install -G Unix Makefiles

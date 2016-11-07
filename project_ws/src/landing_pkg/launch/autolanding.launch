@@ -1,0 +1,12 @@
+<launch>
+
+  <!--<group ns="my_namespace">-->
+    <node pkg="landing_pkg"
+          name="ar_sys_listener"
+          type="ar_sys_listener"
+          output="screen"/>
+          <!--N.B. type è lo stesso di add_executable(ar_sys_listener src/ar_sys_listener.cpp) in CMakeLists.txt-->
+          <!--N.B. ROS_INFO does not print without output=screen-->
+  <!--</group>-->
+
+</launch>
