@@ -1,5 +1,13 @@
 <launch>
 
+<!--Usage:-->
+catkin_make
+source /opt/ros/indigo/setup.bash
+source devel/setup.bash
+roslaunch src/landing_pkg/launch/autolanding.launch
+
+
+
       <!-- Ardrone Autonomy node -->
       <!-- Subscribe to: -->
       <!-- cmd/vel -->
