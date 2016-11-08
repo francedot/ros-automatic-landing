@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(landing_pkg)
 
 ## Find catkin and any catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp std_msgs sensor_msgs message_generation)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs sensor_msgs message_generation)
 
 ## Declare ROS messages and services
 # add_message_files(FILES Num.msg)
@@ -22,8 +22,8 @@ add_executable(ar_sys_listener src/ar_sys_listener.cpp)
 target_link_libraries(ar_sys_listener ${catkin_LIBRARIES})
 add_dependencies(ar_sys_listener landing_pkg_generate_messages_cpp)
 
-# add_executable(listener src/listener.cpp)
-# target_link_libraries(listener ${catkin_LIBRARIES})
-# add_dependencies(listener landing_pkg_generate_messages_cpp)
+add_executable(transform_bootstrapper src/transform_bootstrapper.cpp)
+target_link_libraries(transform_bootstrapper ${catkin_LIBRARIES})
+add_dependencies(transform_bootstrapper landing_pkg_generate_messages_cpp)
 
 # %EndTag(FULLTEXT)%
