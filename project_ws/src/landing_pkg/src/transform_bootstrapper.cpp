@@ -1,11 +1,13 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 
+/// Non più necessario!
+
 using namespace std;
 using namespace std_msgs;
 
 // a mock callback function
-void positionReceived(const std_msgs::StringConstPtr &msg) {
+void positionReceived(const std_msgs::Float64ConstPtr &msg) {
 	ROS_INFO("Received!");	
 }
 

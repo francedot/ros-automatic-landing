@@ -6,15 +6,19 @@
     <!--or with ardrone simulator in gazebo-->
     <!--<include file="$(find cvg_sim_gazebo)/launch/ardrone_testworld.launch"/>-->
 
-    <node name="transform_bootstrapper"
-          type="transform_bootstrapper"
-          pkg="landing_pkg"/>
-
     <!-- ARSYS NODE -->
     <include file="$(find landing_pkg)/launch/arsys.launch"/>
     <!--<include file="$(find ar_sys)/launch/single_board.launch"/>-->
 
     <!-- TRANSFORMATIONS NODES (From PoseStamped to x, y, z float -->
-    <include file="$(find landing_pkg)/launch/transformations.launch"/>    
+    <include file="$(find landing_pkg)/launch/transformations.launch"/>
+
+    <!-- PID X, Y, Z -->
+    <include file="$(find landing_pkg)/launch/position_pids.launch"/>    
+
+    <node name="vel_controller" type="vel_controller" pkg="landing_pkg" output="screen"/>
+    
+
+    <!--<node name="rel_graph" type="rqt_graph" pkg="rqt_graph"/>-->
 
 </launch>

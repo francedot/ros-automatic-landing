@@ -1,0 +1,17 @@
+pub_rate: 4.0
+analyzers:
+  X_PID:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: 'X PID'
+    timeout: 1.0
+    contains: ['x_pid']
+  Y_PID:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: 'Y PID'
+    timeout: 1.0
+    contains: ['y_pid']
+  Z_PID:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: 'Z PID'
+    timeout: 1.0
+    contains: ['z_pid']
