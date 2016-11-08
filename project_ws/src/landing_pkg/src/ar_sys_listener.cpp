@@ -40,7 +40,7 @@ int main(int argc, char ** argv) {
 
 	// create a subscriber object
 	// ros::Subscriber sub = nodeHandle.subscribe("camera1/image_raw", 1000, &imageRawReceived);
-	ros::Subscriber sub = nodeHandle.subscribe("/ardrone/bottom/image_raw", 1000, &imageRawReceived);
+	ros::Subscriber sub = nodeHandle.subscribe("ardrone/bottom/image_raw", 1000, &imageRawReceived);
 
 
 	// let ROS take over
