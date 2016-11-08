@@ -1,0 +1,14 @@
+<!--Basic Launch file incuding node & arguments components-->
+<launch>
+
+    <!--ARDRONE NODE-->
+    <!--<include file="$(find landing_pkg)/launch/ardrone.launch"/>-->
+    <!--or with ardrone simulator in gazebo-->
+    <!--<include file="$(find cvg_sim_gazebo)/launch/ardrone_testworld.launch"/>-->
+
+    <!--ARSYS NODE-->
+    <include file="$(find landing_pkg)/launch/arsys.launch"/>
+    <!--<include file="$(find ar_sys)/launch/single_board.launch"/>-->
+    
+     
+</launch>

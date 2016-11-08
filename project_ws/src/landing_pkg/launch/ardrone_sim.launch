@@ -1,0 +1,9 @@
+<launch>
+    <!--roslaunch cvg_sim_gazebo ardrone_testworld.launch headless:=false-->
+    <!--equals to:-->
+    <!--<node name="cvg_sim_gazebo"
+          type="cvg_sim_gazebo"
+          pkg="cvg_sim_gazebo"
+          args="ardrone_testworld.launch headless:=false"/>-->
+
+</launch>
