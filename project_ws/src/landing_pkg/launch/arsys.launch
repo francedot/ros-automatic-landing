@@ -40,10 +40,10 @@ select timeout in grab
 	<arg name="result_draw_markers_axis" default="false" />
 
 	<arg name="uid" default="" />
-	<arg name="video_namespace" default="/camera1"/>
-	<arg name="video_image_topic" default="image_rect_color"/>
-	<arg name="video_info_topic" default="camera_info"/>
-	<arg name="video_rectified" default="true" />
+	<arg name="video_namespace" default="/ardrone"/>
+	<arg name="video_image_topic" default="bottom/image_raw"/>
+	<arg name="video_info_topic" default="bottom/camera_info"/>
+	<arg name="video_rectified" default="false" />
 
 	<arg name="board_config" default="$(find landing_pkg)/boards/board.yml" />
 	<arg name="board_frame_id" default="board1" />
