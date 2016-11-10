@@ -20,10 +20,10 @@
         type="transform"
         args="/ar_single_board/pose /y_pose std_msgs/Float64 'm.pose.position.y'" />
 
-    <node name="pose_to_z"
+    <!--<node name="pose_to_z"
         pkg="topic_tools"
         respawn="true"
         type="transform"
-        args="/ar_single_board/pose /z_pose std_msgs/Float64 'm.pose.position.z'" />
+        args="/ar_single_board/pose /z_pose std_msgs/Float64 'm.pose.position.z'" />-->
 
 </launch>

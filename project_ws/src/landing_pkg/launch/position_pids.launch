@@ -14,9 +14,9 @@
       <!-- ma è fuori da k_pid -->      
       <remap from="/state" to="x_pose"/>
       <remap from="/control_effort" to="x_effort"/>
-      <param name="Kp" value="5.0" />
+      <param name="Kp" value="0.0" />
       <param name="Ki" value="0.0" />
-      <param name="Kd" value="0.1" />
+      <param name="Kd" value="0.0" />
       <param name="upper_limit" value="10" />
       <param name="lower_limit" value="-10" />
       <param name="windup_limit" value="10" />
@@ -29,9 +29,9 @@
     <node name="y_pid" pkg="pid" type="controller" output="screen">
       <remap from="/state" to="y_pose"/>
       <remap from="/control_effort" to="y_effort"/>
-      <param name="Kp" value="5.0" />
+      <param name="Kp" value="0.0" />
       <param name="Ki" value="0.0" />
-      <param name="Kd" value="0.1" />
+      <param name="Kd" value="0.0" />
       <param name="upper_limit" value="10" />
       <param name="lower_limit" value="-10" />
       <param name="windup_limit" value="10" />
@@ -41,7 +41,7 @@
       <param name="min_loop_frequency" value="95.0" />
     </node>
 
-    <node name="z_pid" pkg="pid" type="controller" output="screen">
+    <!--<node name="z_pid" pkg="pid" type="controller" output="screen">
       <remap from="/state" to="z_pose"/>
       <remap from="/control_effort" to="z_effort"/>
       <param name="Kp" value="5.0" />
@@ -54,7 +54,7 @@
       <param name="diagnostic_period" value="0.25" />
       <param name="max_loop_frequency" value="105.0" />
       <param name="min_loop_frequency" value="95.0" />
-     </node>
+     </node>-->
 
     <!--
     This node simulates a 1st or 2nd-order dynamic system, publishes its state,

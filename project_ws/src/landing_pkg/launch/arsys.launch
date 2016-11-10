@@ -25,7 +25,7 @@ Setting focus_absolute is not supported
 select timeout in grab
 -->
 
-    <arg name="camera_enable" default="true"/>
+    <arg name="camera_enable" default="false"/>
 	<arg name="camera_device" default="/dev/video0"/>
 	<arg name="camera_info" value="file://$(find landing_pkg)/camera_info/camera_calibration.yaml"/>
 	<arg name="camera_frame_id" default="camera1"/>

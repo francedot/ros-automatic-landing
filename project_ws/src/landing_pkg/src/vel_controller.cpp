@@ -30,13 +30,13 @@ void yEffortReceived(const Float64ConstPtr &msg) {
 
 }
 
-void zEffortReceived(const Float64ConstPtr &msg) {
+// void zEffortReceived(const Float64ConstPtr &msg) {
 
-  Twist twist;
-  twist.linear.z = msg->data;
-  chatter_pub.publish(twist);
+//   Twist twist;
+//   twist.linear.z = msg->data;
+//   chatter_pub.publish(twist);
 
-}
+// }
 
 int main(int argc, char** argv)
 {
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 
   ros::Subscriber s1 = nh.subscribe("/x_effort", 1000, &xEffortReceived);
   ros::Subscriber s2 = nh.subscribe("/y_effort", 1000, &yEffortReceived);
-  ros::Subscriber s3 = nh.subscribe("/z_effort", 1000, &zEffortReceived);
+  // ros::Subscriber s3 = nh.subscribe("/z_effort", 1000, &zEffortReceived);
   
   chatter_pub = nh.advertise<Twist>("/cmd_vel", 1000);
 
