@@ -1,19 +1,41 @@
-#include <message_filters/subscriber.h>
-#include <message_filters/synchronizer.h>
-#include <message_filters/sync_policies/approximate_time.h>
-#include <sensor_msgs/Image.h>
-#include <std_msgs/Float64.h>
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+#include "geometry_msgs/Twist.h"
 
-using namespace sensor_msgs;
-using namespace message_filters;
+using namespace geometry_msgs;
+using namespace std_msgs;
+// using namespace message_filters;
 
-// void callback(const ImageConstPtr& image1, const ImageConstPtr& image2)
-// {
-//   // Solve all of perception here...
-// }
+ros::Publisher chatter_pub;
 
-void effortReceived(const std_msgs::Float64ConstPtr &msg) {
-	ROS_INFO("Received %f!", msg->data);	
+void xEffortReceived(const Float64ConstPtr &msg) {
+
+	// ROS_INFO("Received %f!", msg->data);
+
+  Twist twist;
+	// ROS_INFO("Creato Twist!");
+
+  twist.linear.x = msg->data;
+	// ROS_INFO("Inserito x!");
+
+	// ROS_INFO("Inviato Twist su cmd_vel!");
+  chatter_pub.publish(twist);
+}
+
+void yEffortReceived(const Float64ConstPtr &msg) {
+
+  Twist twist;
+  twist.linear.y = msg->data;
+  chatter_pub.publish(twist);
+
+}
+
+void zEffortReceived(const Float64ConstPtr &msg) {
+
+  Twist twist;
+  twist.linear.z = msg->data;
+  chatter_pub.publish(twist);
+
 }
 
 int main(int argc, char** argv)
@@ -22,9 +44,11 @@ int main(int argc, char** argv)
 
   ros::NodeHandle nh;
 
-  ros::Subscriber sub_x = nh.subscribe("/x_effort", 1000, &effortReceived);
-	ros::Subscriber sub_y = nh.subscribe("/y_effort", 1000, &effortReceived);
-	ros::Subscriber sub_z = nh.subscribe("/z_effort", 1000, &effortReceived);
+  ros::Subscriber s1 = nh.subscribe("/x_effort", 1000, &xEffortReceived);
+  ros::Subscriber s2 = nh.subscribe("/y_effort", 1000, &yEffortReceived);
+  ros::Subscriber s3 = nh.subscribe("/z_effort", 1000, &zEffortReceived);
+  
+  chatter_pub = nh.advertise<Twist>("/cmd_vel", 1000);
 
   // A questo punto dovremmo sottoscrivere vel_controller ai topic x_effort, y_effort e z_effort
   // in modo da generare il Twist opportuno sul topic cmd_vel.
