@@ -50,7 +50,6 @@ select timeout in grab
 	<arg name="marker_size" default="0.05" />
       <arg name="publish_tf" default="false" />
 
-
 	<group if="$(arg camera_enable)">
 		<node ns="$(arg video_namespace)" pkg="image_proc" type="image_proc" name="image_proc$(arg uid)" />
 		<node ns="$(arg video_namespace)" pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera$(arg uid)" output="screen">

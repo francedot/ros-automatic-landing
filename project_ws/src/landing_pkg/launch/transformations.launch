@@ -10,15 +10,13 @@
 
     <node name="pose_to_x"
         pkg="topic_tools"
-        respawn="true"
         type="transform"
-        args="/ar_single_board/pose /x_pose std_msgs/Float64 'm.pose.position.x'" />
+        args="--wait-for-start /ar_single_board/pose /x_pose std_msgs/Float64 'm.pose.position.x'" />
 
     <node name="pose_to_y"
         pkg="topic_tools"
-        respawn="true"
         type="transform"
-        args="/ar_single_board/pose /y_pose std_msgs/Float64 'm.pose.position.y'" />
+        args="--wait-for-start /ar_single_board/pose /y_pose std_msgs/Float64 'm.pose.position.y'" />
 
     <!--<node name="pose_to_z"
         pkg="topic_tools"
