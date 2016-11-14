@@ -18,7 +18,7 @@ void xEffortReceived(const Float64ConstPtr &msg) {
   twist.linear.x = msg->data;
 	// ROS_INFO("Inserito x!");
 
-	// ROS_INFO("Inviato Twist su cmd_vel!");
+	// ROS_INFO("Inviato Twist su cmd_vel!");nhj
   chatter_pub.publish(twist);
 }
 
