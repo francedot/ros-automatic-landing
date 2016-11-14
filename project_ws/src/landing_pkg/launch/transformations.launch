@@ -4,24 +4,18 @@
         N.B: respawn="true" since ros_topic may not find a published /k_pose at startup.
         In this case we relaunch it.
     -->
-
+ 
     <!-- same as: -->
     <!--rosrun topic_tools transform /ar_single_board/pose /x_pose std_msgs/Float64 'm.pose.position.x'-->
 
     <node name="pose_to_x"
         pkg="topic_tools"
         type="transform"
-        args="--wait-for-start /ar_single_board/pose /x_pose std_msgs/Float64 'm.pose.position.x'" />
+        args="--wait-for-start /ar_single_board/pose /x_pose pid/StampedFloat64 'm.header, m.pose.position.x'" />
 
     <node name="pose_to_y"
         pkg="topic_tools"
         type="transform"
-        args="--wait-for-start /ar_single_board/pose /y_pose std_msgs/Float64 'm.pose.position.y'" />
-
-    <!--<node name="pose_to_z"
-        pkg="topic_tools"
-        respawn="true"
-        type="transform"
-        args="/ar_single_board/pose /z_pose std_msgs/Float64 'm.pose.position.z'" />-->
+        args="--wait-for-start /ar_single_board/pose /y_pose pid/StampedFloat64 'm.header, m.pose.position.y'" />
 
 </launch>

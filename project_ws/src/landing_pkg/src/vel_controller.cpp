@@ -1,17 +1,19 @@
 #include "ros/ros.h"
+#include "pid/StampedFloat64.h"
 #include "std_msgs/Float64.h"
 #include "geometry_msgs/Twist.h"
 
 using namespace geometry_msgs;
 using namespace std_msgs;
+using namespace pid;
 // using namespace message_filters;
 
 ros::Publisher chatter_pub;
 
-void xEffortReceived(const Float64ConstPtr &msg) {
+void xEffortReceived(const StampedFloat64 &msg) {
 
 	// ROS_INFO("Received %f!", msg->data);
-
+ /*
   Twist twist;
 	// ROS_INFO("Creato Twist!");
 
@@ -19,14 +21,21 @@ void xEffortReceived(const Float64ConstPtr &msg) {
 	// ROS_INFO("Inserito x!");
 
 	// ROS_INFO("Inviato Twist su cmd_vel!");
+  
   chatter_pub.publish(twist);
+  */
+ROS_INFO("Received %f!", msg.c);
+
 }
 
-void yEffortReceived(const Float64ConstPtr &msg) {
-
+void yEffortReceived(const StampedFloat64 &msg) {
+  /*
   Twist twist;
   twist.linear.y = msg->data;
+  
   chatter_pub.publish(twist);
+*/
+  ROS_INFO("Received %f!", msg.c);
 
 }
 
