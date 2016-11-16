@@ -58,7 +58,7 @@
 
   <!--If Custom Messages and Services -->
   <build_depend>message_generation</build_depend>  
-  
+  <build_depend>message_filters</build_depend>
   <!--Other deps which may be useful in the future-->
   <!--<build_depend>std_srvs</build_depend>
   <build_depend>tf</build_depend>
@@ -77,6 +77,7 @@
   <run_depend>cvg_sim_gazebo</run_depend>
   <run_depend>cvg_sim_gazebo_plugins</run_depend>
   <run_depend>message_to_tf</run_depend>
+  <run_depend>message_filters</run_depend>
 
   <!--<run_depend>std_srvs</run_depend>
   <run_depend>tf</run_depend>

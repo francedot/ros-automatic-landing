@@ -145,7 +145,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(landing_pkg_EXPORTED_TARGETS "landing_pkg_generate_messages_cpp;landing_pkg_generate_messages_lisp;landing_pkg_generate_messages_py")
+set(landing_pkg_EXPORTED_TARGETS "")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${landing_pkg_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -182,7 +182,7 @@ foreach(depend ${depends})
   list(APPEND landing_pkg_EXPORTED_TARGETS ${${landing_pkg_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "landing_pkg-msg-extras.cmake")
+set(pkg_cfg_extras "")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${landing_pkg_DIR}/${extra})
