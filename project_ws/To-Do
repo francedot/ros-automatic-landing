@@ -1,4 +1,4 @@
-	  -> Driver tiene l'ultimo cmd_vel che ha ricevuto
+CaiAnal69	  -> Driver tiene l'ultimo cmd_vel che ha ricevuto
 	  -> Camera ha un rate di trasmissione basso
 							      -> Controllo non accurato
 
@@ -9,21 +9,21 @@
 	      Controlla il rate di trasmissione della camera => Se comunque è troppo basso, cambiare PID
 
 	  
-	  -> Fare nuovo board marker:
+HotBon93  -> Fare nuovo board marker:
 					Più grande (A2-A3), tanti markers più piccoli
 					Integrazione ArSys (yaml)
 
-	  -> Aggiungere togglecamera a launch
+CaiAnal69  -> Aggiungere togglecamera a launch
 	  
-	  -> Capire trasformazione
+BOTH	  -> Capire trasformazione
 
-	  -> Capire orientation assi (ardrone_base_link, ardrone_bottomcam)  || rviz
+BOTH	  -> Capire orientation assi (ardrone_base_link, ardrone_bottomcam)  || rviz
 
-	  -> Iniziare a pensare ad angolo yaw
+BOTH	  -> Iniziare a pensare ad angolo yaw
 
-	  -> Code refactoring (upper case a trattini (cit. Bonacci))
+HotBon93	  -> Code refactoring (upper case a trattini (cit. Bonacci))
 
-	  -> Nodo che monitora topics e stampa formattata [ Fallo in modo che sia facilmente estendibile aggiungendo nuovi topic ]
+CaiAnal69	  -> Nodo che monitora topics e stampa formattata [ Fallo in modo che sia facilmente estendibile aggiungendo nuovi topic ]
 
-	  -> Modify bootstrapper e processo di inizializzazione [ Rendere più facile sostituire input/output del "sistema-controllore" ]
+HotBon93	  -> Modify bootstrapper e processo di inizializzazione [ Rendere più facile sostituire input/output del "sistema-controllore" ]
 
