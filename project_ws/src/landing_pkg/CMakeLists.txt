@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(landing_pkg)
 
 ## Find catkin and any catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs sensor_msgs message_generation message_filters)
+find_package(catkin REQUIRED COMPONENTS tf roscpp rospy std_msgs sensor_msgs message_generation message_filters)
 
 ## Declare ROS messages and services
 # add_message_files(FILES Num.msg)
