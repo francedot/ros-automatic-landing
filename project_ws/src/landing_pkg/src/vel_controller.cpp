@@ -27,7 +27,7 @@ void set_max_time_for_effort() {
   // TO-DO: Figure out how long should be this interval
   //	    It could be K * AVG[Times_of_efforts_arrivals] with 0 < k < 1
   max_time_for_effort.tv_sec = 0;
-  max_time_for_effort.tv_usec = 5000;
+  max_time_for_effort.tv_usec = 500000;
 }
 
 void send_stop_message() {
@@ -108,7 +108,7 @@ int main(int argc, char** argv) {
   struct timeval time_difference, current_time;
   set_max_time_for_effort();
   
-  ros::Rate r(1);
+  ros::Rate r(28);
   while(ros::ok()) {
     if(!already_sent){
       gettimeofday(&current_time, NULL);
