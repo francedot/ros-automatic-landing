@@ -116,16 +116,16 @@ int main(int argc, char** argv) {
   struct timeval time_difference, current_time;
   set_max_time_for_effort();
   
-  ros::Rate r(28);
+  ros::Rate r(50);
   while(ros::ok()) {
-    //if(!already_sent){
+    if(!already_sent){
       gettimeofday(&current_time, NULL);
       if(1 == timeval_subtract(&time_difference, &current_time, &last_callback))
 	ROS_ERROR("time difference should not be negative"); 
       
       if((time_difference.tv_sec >= max_time_for_effort.tv_sec) && (time_difference.tv_usec > max_time_for_effort.tv_usec))
 	send_stop_message();    
-    //}
+    }
     ros::spinOnce();
     r.sleep();
   }
