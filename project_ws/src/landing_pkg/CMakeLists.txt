@@ -22,6 +22,10 @@ add_executable(vel_controller src/vel_controller.cpp)
 target_link_libraries(vel_controller ${catkin_LIBRARIES})
 add_dependencies(vel_controller landing_pkg_generate_messages_cpp)
 
+add_executable(pose_to_stamped_yaw src/pose_to_stamped_yaw.cpp)
+target_link_libraries(pose_to_stamped_yaw ${catkin_LIBRARIES})
+add_dependencies(pose_to_stamped_yaw landing_pkg_generate_messages_cpp)
+
 # add_executable(ar_sys_listener src/ar_sys_listener.cpp)
 # target_link_libraries(ar_sys_listener ${catkin_LIBRARIES})
 # add_dependencies(ar_sys_listener landing_pkg_generate_messages_cpp)

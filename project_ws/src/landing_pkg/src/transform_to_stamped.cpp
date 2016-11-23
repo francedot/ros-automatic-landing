@@ -6,7 +6,7 @@ using namespace std;
 using namespace std_msgs;
 using namespace geometry_msgs;
 
-ros::Publisher chatter_pub_x;
+ros::Publisher chatter_pub_yaw;
 ros::Publisher chatter_pub_y;
 
 void positionReceived(const geometry_msgs::PoseStamped &msg) {
@@ -19,7 +19,7 @@ void positionReceived(const geometry_msgs::PoseStamped &msg) {
 	sfY.header = msg.header;
 	sfY.c = msg.pose.position.y;
 
-	chatter_pub_x.publish(sfX);
+	chatter_pub_yaw.publish(sfX);
 	chatter_pub_y.publish(sfY);
 }
 
