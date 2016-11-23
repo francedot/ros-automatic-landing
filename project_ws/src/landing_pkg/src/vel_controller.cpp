@@ -10,8 +10,9 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-using namespace geometry_msgs;
+using namespace tf;
 using namespace pid;
+using namespace geometry_msgs;
 using namespace message_filters;
 
 ros::Publisher chatter_pub;
@@ -43,7 +44,7 @@ void send_stop_message() {
   chatter_pub.publish(tw);
 }
 
-void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64ConstPtr& yEffort) {
+void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64ConstPtr& yEffort, const StampedFloat64ConstPtr& yawEffort) {
   /*
       Called when an <x,y> control effort arrives.
       Transforms from camera to drone's coordinate system.
@@ -61,11 +62,18 @@ void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64C
       return;
     }
   }
-  tf::Vector3 linear(xEffort->c, yEffort->c, 0);
+  // Mod
+  Quaternion fromYaw = tf::createQuaternionFromYaw(yawEffort->c);
+  fromYaw = transform * fromYaw;
+  double toYaw = getYaw(fromYaw);
+  //
+  Vector3 linear(xEffort->c, yEffort->c, 0);
   linear = (transform * linear) - (transform * tf::Vector3(0,0,0));
+
   Twist tw;
   tw.linear.x = linear.x();
   tw.linear.y = linear.y();
+  tw.angular.z = toYaw;
   chatter_pub.publish(tw);
 }
 
@@ -110,14 +118,14 @@ int main(int argc, char** argv) {
   
   ros::Rate r(28);
   while(ros::ok()) {
-    if(!already_sent){
+    //if(!already_sent){
       gettimeofday(&current_time, NULL);
       if(1 == timeval_subtract(&time_difference, &current_time, &last_callback))
 	ROS_ERROR("time difference should not be negative"); 
       
       if((time_difference.tv_sec >= max_time_for_effort.tv_sec) && (time_difference.tv_usec > max_time_for_effort.tv_usec))
 	send_stop_message();    
-    }
+    //}
     ros::spinOnce();
     r.sleep();
   }
