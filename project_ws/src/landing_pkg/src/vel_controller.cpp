@@ -44,7 +44,7 @@ void send_stop_message() {
   chatter_pub.publish(tw);
 }
 
-void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64ConstPtr& yEffort, const StampedFloat64ConstPtr& yawEffort) {
+void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64ConstPtr& yEffort/*, const StampedFloat64ConstPtr& yawEffort*/) {
   /*
       Called when an <x,y> control effort arrives.
       Transforms from camera to drone's coordinate system.
@@ -63,17 +63,17 @@ void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64C
     }
   }
   // Mod
-  Quaternion fromYaw = tf::createQuaternionFromYaw(yawEffort->c);
+/*  Quaternion fromYaw = tf::createQuaternionFromYaw(yawEffort->c);
   fromYaw = transform * fromYaw;
   double toYaw = getYaw(fromYaw);
-  //
-  Vector3 linear(xEffort->c, yEffort->c, 0);
+*/  //
+  tf::Vector3 linear(xEffort->c, yEffort->c, 0);
   linear = (transform * linear) - (transform * tf::Vector3(0,0,0));
 
   Twist tw;
   tw.linear.x = linear.x();
   tw.linear.y = linear.y();
-  tw.angular.z = toYaw;
+  //tw.angular.z = toYaw;
   chatter_pub.publish(tw);
 }
 

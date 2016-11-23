@@ -20,10 +20,10 @@
 	<arg name="video_rectified" default="false" />
 
 	<!--Switch board here-->
-	<arg name="board_config" default="$(find landing_pkg)/boards/custom_board1x1.yml" />
+	<arg name="board_config" default="$(find landing_pkg)/boards/custom_board8x8.yml" />
 	<arg name="board_frame_id" default="board1" />
 	<!--Change marker cell size here-->	
-	<arg name="marker_size" default="0.28" />
+	<arg name="marker_size" default="1.15" />
 	<arg name="publish_tf" default="false" />
 
 	<node ns="/" pkg="ar_sys" type="single_board" name="ar_single_board$(arg uid)" output="screen">
