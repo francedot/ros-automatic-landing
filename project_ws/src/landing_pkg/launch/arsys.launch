@@ -10,8 +10,8 @@
 	<arg name="result_display" default="true"/>
 	<arg name="result_autosize" default="true"/>
 	<arg name="result_draw_markers" default="true" />
-	<arg name="result_draw_markers_cube" default="true" />
-	<arg name="result_draw_markers_axis" default="true" />
+	<arg name="result_draw_markers_cube" default="false" />
+	<arg name="result_draw_markers_axis" default="false" />
 
 	<arg name="uid" default="" />
 	<arg name="video_namespace" default="/ardrone"/>
@@ -23,7 +23,7 @@
 	<arg name="board_config" default="$(find landing_pkg)/boards/custom_board8x8.yml" />
 	<arg name="board_frame_id" default="board1" />
 	<!--Change marker cell size here-->	
-	<arg name="marker_size" default="1.15" />
+	<arg name="marker_size" default="0.0115" />
 	<arg name="publish_tf" default="false" />
 
 	<node ns="/" pkg="ar_sys" type="single_board" name="ar_single_board$(arg uid)" output="screen">

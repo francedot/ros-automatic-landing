@@ -19,6 +19,8 @@ ros::Publisher chatter_pub;
 boost::shared_ptr<tf::TransformListener> listener;
 tf::StampedTransform transform;
 bool transform_setup = false;
+bool enabled = false;
+
 
 struct timeval last_callback, max_time_for_effort;
 bool already_sent = false;
@@ -45,6 +47,8 @@ void send_stop_message() {
 }
 
 void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64ConstPtr& yEffort/*, const StampedFloat64ConstPtr& yawEffort*/) {
+  if(!enabled)
+    return;
   /*
       Called when an <x,y> control effort arrives.
       Transforms from camera to drone's coordinate system.
@@ -67,6 +71,7 @@ void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64C
   fromYaw = transform * fromYaw;
   double toYaw = getYaw(fromYaw);
 */  //
+
   tf::Vector3 linear(xEffort->c, yEffort->c, 0);
   linear = (transform * linear) - (transform * tf::Vector3(0,0,0));
 
@@ -102,7 +107,10 @@ int timeval_subtract (struct timeval *result, struct timeval *x, struct timeval 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "vel_controller");
   ros::NodeHandle nh;
-  
+
+  ros::NodeHandle pnh("~");
+  pnh.param("enabled",enabled,false);
+
   listener.reset(new tf::TransformListener);
   chatter_pub = nh.advertise<Twist>("cmd_vel", 1);
 

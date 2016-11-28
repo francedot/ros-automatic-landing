@@ -1,6 +1,6 @@
 <!--Basic Launch file incuding node & arguments components-->
 <launch>
-
+    <arg name="enabled" default="true"/>
     <!-- ARDRONE NODE -->
     <include file="$(find landing_pkg)/launch/ardrone.launch"/>
     <!--or with ardrone simulator in gazebo-->
@@ -16,7 +16,9 @@
     <!-- PID X, Y, Z -->
     <include file="$(find landing_pkg)/launch/position_pids.launch"/>    
 
-    <node name="vel_controller" type="vel_controller" pkg="landing_pkg" output="screen"/>
+    <node name="vel_controller" type="vel_controller" pkg="landing_pkg" output="screen">
+        <param name="enabled" value="$(arg enabled)"/>
+    </node>
     
 
     <!--<node name="rel_graph" type="rqt_graph" pkg="rqt_graph"/>-->
