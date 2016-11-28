@@ -2,9 +2,12 @@
 <launch>
     <arg name="enabled" default="true"/>
     <!-- ARDRONE NODE -->
-    <include file="$(find landing_pkg)/launch/ardrone.launch"/>
+    <!--<include file="$(find landing_pkg)/launch/ardrone.launch"/>-->
     <!--or with ardrone simulator in gazebo-->
-    <!--<include file="$(find cvg_sim_gazebo)/launch/ardrone_testworld.launch"/>-->
+    <include file="$(find cvg_sim_gazebo)/launch/ardrone_testworld.launch"/>
+
+    <!-- rosservice call /ardrone/togglecam -->
+    <node pkg="rosservice" type="rosservice" name="switch_camera" args="call --wait /ardrone/togglecam"/>
 
     <!-- ARSYS NODE -->
     <include file="$(find landing_pkg)/launch/arsys.launch"/>
