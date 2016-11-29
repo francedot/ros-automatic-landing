@@ -21,6 +21,7 @@ tf::StampedTransform transform;
 bool transform_setup = false;
 bool enabled = false;
 
+float last_z_effort = 0f;
 
 struct timeval last_callback, max_time_for_effort;
 bool already_sent = false;
@@ -44,6 +45,10 @@ void send_stop_message() {
   tw.angular.y = 0;
   tw.angular.z = 0;
   chatter_pub.publish(tw);
+}
+
+void zEffortReceived(const Float64ConstPtr& zEffort) {
+    last_z_effort = zEffort;
 }
 
 void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64ConstPtr& yEffort/*, const StampedFloat64ConstPtr& yawEffort*/) {
@@ -78,8 +83,10 @@ void effortReceived(const StampedFloat64ConstPtr& xEffort, const StampedFloat64C
   Twist tw;
   tw.linear.x = linear.x();
   tw.linear.y = linear.y();
+  tw.linear.z = last_z_effort;
   //tw.angular.z = toYaw;
   chatter_pub.publish(tw);
+  last_z_effort = 0f;
 }
 
 int timeval_subtract (struct timeval *result, struct timeval *x, struct timeval *y) {
@@ -113,6 +120,8 @@ int main(int argc, char** argv) {
 
   listener.reset(new tf::TransformListener);
   chatter_pub = nh.advertise<Twist>("cmd_vel", 1);
+
+  ros::Subscriber sub = nh.subscribe("ardrone/z_effort", 1000, &zEffortReceived);
 
   message_filters::Subscriber<StampedFloat64> x_effort_sub(nh, "x_effort", 1);
   message_filters::Subscriber<StampedFloat64> y_effort_sub(nh, "y_effort", 1);
