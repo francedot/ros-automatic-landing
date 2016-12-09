@@ -18,7 +18,15 @@
 
     <node name="vel_controller" type="vel_controller" pkg="landing_pkg" output="screen">
         <param name="enabled" value="$(arg enabled)"/>
+        <param name="has_to_reach_quota" value="true"/>
+        <param name="landing_quota" value="2000"/>
+        <param name="zeta_land_vel" value="0.2"/>
+        <param name="quota_reached_toleration" value="250"/>
     </node>
+
+    <arg name="video_rectified" default="false" />
+
+    <node name="quota_monitor" type="quota_monitor" pkg="landing_pkg" output="screen"/>
 
     <!--<node name="rel_graph" type="rqt_graph" pkg="rqt_graph"/>-->
 

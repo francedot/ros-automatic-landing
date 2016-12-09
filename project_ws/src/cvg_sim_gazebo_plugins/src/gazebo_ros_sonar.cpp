@@ -119,7 +119,7 @@ void GazeboRosSonar::Update()
 {
   common::Time sim_time = world->GetSimTime();
   double dt = (sim_time - last_time).Double();
-//  if (last_time + updatePeriod > sim_time) return;
+//  if (last_landing_time + updatePeriod > sim_time) return;
 
   // activate RaySensor if it is not yet active
   if (!sensor_->IsActive()) sensor_->SetActive(true);

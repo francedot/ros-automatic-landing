@@ -329,12 +329,12 @@ void GazeboQuadrotorSimpleController::Update()
   if (force.z < 0.0) force.z = 0.0;
 
 //  static double lastDebugOutput = 0.0;
-//  if (last_time.Double() - lastDebugOutput > 0.1) {
+//  if (last_landing_time.Double() - lastDebugOutput > 0.1) {
 //    ROS_DEBUG_NAMED("quadrotor_simple_controller", "Velocity = [%g %g %g], Acceleration = [%g %g %g]", velocity.x, velocity.y, velocity.z, acceleration.x, acceleration.y, acceleration.z);
 //    ROS_DEBUG_NAMED("quadrotor_simple_controller", "Command: linear = [%g %g %g], angular = [%g %g %g], roll/pitch = [%g %g]", velocity_command_.linear.x, velocity_command_.linear.y, velocity_command_.linear.z, velocity_command_.angular.x*180/M_PI, velocity_command_.angular.y*180/M_PI, velocity_command_.angular.z*180/M_PI, roll_command*180/M_PI, pitch_command*180/M_PI);
 //    ROS_DEBUG_NAMED("quadrotor_simple_controller", "Mass: %g kg, Inertia: [%g %g %g], Load: %g g", mass, inertia.x, inertia.y, inertia.z, load_factor);
 //    ROS_DEBUG_NAMED("quadrotor_simple_controller", "Force: [%g %g %g], Torque: [%g %g %g]", force.x, force.y, force.z, torque.x, torque.y, torque.z);
-//    lastDebugOutput = last_time.Double();
+//    lastDebugOutput = last_landing_time.Double();
 //  }
 
   // process robot state information
