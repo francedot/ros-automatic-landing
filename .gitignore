@@ -51,3 +51,6 @@ CATKIN_IGNORE
 .idea/
 cmake-build-debug/
 
+#Clion level CMakeLists
+/CMakeLists.txt
+
