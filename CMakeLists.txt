@@ -4,10 +4,6 @@ project(landing)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
-    cmake-build-debug/CMakeFiles/3.6.2/CompilerIdC/CMakeCCompilerId.c
-    cmake-build-debug/CMakeFiles/3.6.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
-    cmake-build-debug/CMakeFiles/feature_tests.c
-    cmake-build-debug/CMakeFiles/feature_tests.cxx
     project_ws/build/CMakeFiles/2.8.12.2/CompilerIdC/CMakeCCompilerId.c
     project_ws/build/CMakeFiles/2.8.12.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
     project_ws/devel/include/cvg_sim_gazebo_plugins/SetBias.h
@@ -37,6 +33,7 @@ set(SOURCE_FILES
     project_ws/devel/include/cvg_sim_msgs/YawrateCommand.h
     project_ws/devel/include/pid/PidConfig.h
     project_ws/devel/include/pid/StampedFloat64.h
+    project_ws/devel/include/landing_pkg/ErrorStamped.h
     project_ws/src/cmake-build-debug/CMakeFiles/3.6.2/CompilerIdC/CMakeCCompilerId.c
     project_ws/src/cmake-build-debug/CMakeFiles/3.6.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
     project_ws/src/cmake-build-debug/CMakeFiles/feature_tests.c
@@ -63,12 +60,13 @@ set(SOURCE_FILES
     project_ws/src/cvg_sim_gazebo_plugins/src/test_trajectory.cpp
     project_ws/src/cvg_sim_msgs/include/cvg_sim_msgs/RC/functions.h
     project_ws/src/cvg_sim_msgs/include/cvg_sim_msgs/ControlSource.h
+    project_ws/src/landing_pkg/src/headers/TimeUtils.h
     project_ws/src/landing_pkg/src/ar_sys_listener.cpp
+    project_ws/src/landing_pkg/src/error_monitor.cpp
     project_ws/src/landing_pkg/src/lander.cpp
-    project_ws/src/landing_pkg/src/TimeUtils.cpp
-        project_ws/src/landing_pkg/src/headers/TimeUtils.h
     project_ws/src/landing_pkg/src/pose_to_stamped_yaw.cpp
     project_ws/src/landing_pkg/src/quota_monitor.cpp
+    project_ws/src/landing_pkg/src/TimeUtils.cpp
     project_ws/src/landing_pkg/src/transform_bootstrapper.cpp
     project_ws/src/landing_pkg/src/transform_to_stamped.cpp
     project_ws/src/landing_pkg/src/vel_controller.cpp
@@ -80,6 +78,6 @@ set(SOURCE_FILES
     project_ws/src/pid/src/controllerOld.cpp
     project_ws/src/pid/src/plant_sim.cpp
     project_ws/src/pid/src/setpoint_node.cpp
-    project_ws/src/pid/src/sim_time.cpp project_ws/src/landing_pkg/src/TimeUtils.cpp project_ws/src/landing_pkg/src/headers/TimeUtils.h)
+    project_ws/src/pid/src/sim_time.cpp)
 
 add_executable(landing ${SOURCE_FILES})
