@@ -14,18 +14,18 @@ ros::Publisher quota_pub;
 void navdataReceived(const NavdataConstPtr &navdataReceived) {
 
     // altd given in cm from navdata
-    double quota = (double) navdataReceived->altd * 10; // to uniforms as cm
+    double quota = (double) navdataReceived->altd * 10; // to uniform as mm
+
     Float64 alt;
     alt.data = quota;
-    //ptr->data = quota;
-    ROS_INFO("Current quota is %lf", quota);
+
     quota_pub.publish(alt);
+    ROS_INFO("quota_monitor: Sent quota %lf", quota);
 }
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "quota_monitor");
     ros::NodeHandle nh;
-    ros::NodeHandle pnh("~");
 
     ros::Subscriber sub = nh.subscribe("ardrone/navdata", 1, &navdataReceived);
 

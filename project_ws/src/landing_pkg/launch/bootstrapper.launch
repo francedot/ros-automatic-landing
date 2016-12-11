@@ -16,7 +16,7 @@
     <!-- PID X, Y, Z -->
     <include file="$(find landing_pkg)/launch/position_pids.launch"/>    
 
-    <node name="vel_controller" type="vel_controller" pkg="landing_pkg" output="screen">
+    <node name="main_controller" type="main_controller" pkg="landing_pkg" output="screen">
         <param name="enabled" value="$(arg enabled)"/>
         <param name="has_to_reach_quota" value="true"/>
         <param name="landing_quota" value="2000"/>

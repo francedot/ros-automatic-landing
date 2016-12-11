@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <ros/duration.h>
 #include <std_msgs/Header.h>
 #include <landing_pkg/ErrorStamped.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -32,18 +31,27 @@ ros::Time start_of_average;
 
 ros::Publisher error_pub;
 
-void update_averages(double new_val, double *avg, long *index) {
-    (*index) += 1;
-    double diff = new_val - (*avg);
-    (*avg) = (*avg) + (diff / (*index));
+void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg);
+void update_averages(double new_val, double *avg, long *index);
+
+int main(int argc, char **argv) {
+
+    ros::init(argc, argv, "error_monitor");
+    ros::NodeHandle nh;
+
+    ros::Subscriber pose_sub = nh.subscribe("/ar_single_board/pose", 1, on_error_update);
+    error_pub = nh.advertise<landing_pkg::ErrorStamped>("/pose_error", 1);
+
+    ros::spin();
+    return 0;
 }
 
-void error_update(const geometry_msgs::PoseStampedConstPtr& stamped_msg) {
+void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg) {
     if(!prev_time.isZero()) {
         delta_t = ros::Time::now() - prev_time;
         prev_time = ros::Time::now();
         if(0 == delta_t.toSec()){
-            ROS_ERROR("delta_t to zero: cannot compute derivative.\n");
+            ROS_ERROR("error_monitor: delta_t to zero: cannot compute derivative.\n");
             return;
         }
     }else{
@@ -90,20 +98,16 @@ void error_update(const geometry_msgs::PoseStampedConstPtr& stamped_msg) {
     output_error.avg_ex = avg_ex;
     output_error.avg_ey = avg_ey;
     output_error.avg_dx = avg_dx;
-    output_error.avg_dy = avg_dy;
+    output_error.avg_dys = avg_dy;
 
     error_pub.publish(output_error);
+    ROS_INFO("error_monitor: Sent pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
+             output_error.ex, output_error.ey, output_error.dx, output_error.dy, output_error.avg_ex, output_error.avg_ey,
+             output_error.avg_dx, output_error.avg_dys);
 }
 
-int main(int argc, char **argv) {
-    ROS_INFO("Started Error Monitor node.\n");
-
-    ros::init(argc, argv, "Error Monitor");
-    ros::NodeHandle nh;
-
-    ros::Subscriber pose_sub = node.subscribe("/ar_single_board", 1, error_update);
-    error_pub = nh.advertise<landing_pkg::ErrorStamped>("/error_topic", 1);
-
-    ros::spin();
-    return 0;
+void update_averages(double new_val, double *avg, long *index) {
+    (*index) += 1;
+    double diff = new_val - (*avg);
+    (*avg) = (*avg) + (diff / (*index));
 }
