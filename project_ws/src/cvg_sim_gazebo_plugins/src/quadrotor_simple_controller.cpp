@@ -255,10 +255,10 @@ void GazeboQuadrotorSimpleController::StateCallback(const nav_msgs::OdometryCons
     pose.pos.Set(state->pose.pose.position.x, state->pose.pose.position.y, state->pose.pose.position.z);
     pose.rot.Set(state->pose.pose.orientation.w, state->pose.pose.orientation.x, state->pose.pose.orientation.y, state->pose.pose.orientation.z);
     euler = pose.rot.GetAsEuler();
-    angular_velocity.Set(state->next_twist.twist.angular.x, state->next_twist.twist.angular.y, state->next_twist.twist.angular.z);
+    angular_velocity.Set(state->twist.twist.angular.x, state->twist.twist.angular.y, state->twist.twist.angular.z);
   }
 
-  velocity.Set(state->next_twist.twist.linear.x, state->next_twist.twist.linear.y, state->next_twist.twist.linear.z);
+  velocity.Set(state->twist.twist.linear.x, state->twist.twist.linear.y, state->twist.twist.linear.z);
 
   // calculate acceleration
   double dt = !state_stamp.isZero() ? (state->header.stamp - state_stamp).toSec() : 0.0;
