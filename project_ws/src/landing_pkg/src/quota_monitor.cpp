@@ -20,7 +20,7 @@ void navdata_received(const NavdataConstPtr &navdata) {
     alt.data = quota;
 
     quota_pub.publish(alt);
-    ROS_INFO("quota_monitor: Sent quota %lf", quota);
+    //ROS_INFO("quota_monitor: Sent quota %lf", quota);
 }
 
 int main(int argc, char **argv) {

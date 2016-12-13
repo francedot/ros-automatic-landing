@@ -1,39 +1,43 @@
-#include <std_msgs/Header.h>
+// TODO: Make main controller subscribe this topic and send landing message
+
 #include <ros/ros.h>
-#include <geometry_msgs/PoseStamped.h>
+#include <std_msgs/Empty.h>
+#include <std_msgs/Float64.h>
+#include <landing_pkg/ErrorStamped.h>
 
 using namespace std;
 using namespace std_msgs;
 using namespace geometry_msgs;
 
-void ros_loop_continue(ros::Rate r);
-double getError(Point point_);
+ErrorStamped cur_pose_error;
+Float64 cur_quota;
 
-// lambda = error toleration
+/* LANDING PARAMETERS */
+double center_margin = 0.10; // Accepted distance from (0,0) in m
+double speed_margin = 1; // Accepted position variation in m/s
+double avg_center_margin = 0.8;
+double avg_speed_margin = 0.5;
+double landing_quote = 0.6; // Quote for landing signal
 
-/** Parameters **/
-double lambda = 0.0;
-double  = 0.0;
+void cur_quota_received(const Float64 &cur_quota_) {
+    cur_quota = cur_quota_;
+    ROS_INFO("lander: Received quota %lf", cur_quota.data);
+}
 
+void pose_error_received(const ErrorStampedConstPtr &error) {
+    cur_pose_error = *error;
+    ROS_INFO(
+            "lander: Received pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
+            cur_pose_error.ex, cur_pose_error.ey, cur_pose_error.dx, cur_pose_error.dy, cur_pose_error.avg_ex,
+            cur_pose_error.avg_ey,
+            cur_pose_error.avg_dx, cur_pose_error.avg_dy);
+}
 
-timeval last_landing_time;
-PoseStampedConstPtr lastReceivedPose;
-
-// a callback function
-void poseReceived(const PoseStampedConstPtr &msg) {
-
-    ROS_INFO("Received!");
-    lastReceivedPose = msg;
-
-    Header header = msg->header;
-    uint32_t seq = header.seq;
-    ros::Time stamp = header.stamp;
-    double stamp_sec = stamp.toSec();
-    string frame_id = header.frame_id;
-
-    ROS_INFO("Header seq is %u", seq);
-    ROS_INFO("Header stamp is %lf", stamp_sec);
-    ROS_INFO_STREAM("Header frame_id is " << frame_id);
+bool check_landing_conditions() {
+    return ((cur_pose_error.ex < center_margin) && (cur_pose_error.ey < center_margin) &&
+            (cur_pose_error.dx < speed_margin) && (cur_pose_error.dy < speed_margin) &&
+            (cur_pose_error.avg_ex < avg_center_margin) && (cur_pose_error.avg_ey < avg_center_margin) &&
+            (cur_pose_error.avg_dx < avg_speed_margin) && (cur_pose_error.avg_dy < avg_speed_margin));
 }
 
 int main(int argc, char **argv) {
@@ -43,54 +47,27 @@ int main(int argc, char **argv) {
 
     pnh.param("lambda",lambda,false);
 
-    // ROS_INFO("Avviato!");
-
     // create a subscriber object
-    ros::Subscriber sub = nodeHandle.subscribe("/ar_single_board/pose", 1, &poseReceived);
+    ros::Subscriber sub_reach_quota = nh.subscribe("/ardrone/cur_quota", 1, &cur_quota_received);
+    ros::Subscriber sub_pose_error = nh.subscribe("/pose_error", 1, &pose_error_received);
 
     ros::Rate r(50);
     while (ros::ok()) {
 
-        if (lastReceivedPose == nullptr) {
-            ROS_ERROR("lastReceivedPose not initialized");
-            ros_loop_continue(r);
+        if (check_landing_conditions()) {
+            ROS_INFO("lander: check_landing_conditions=true");
+            Float64 z_effort;
+            z_effort.data = zeta_land_vel;
+            z_effort_pub.publish(z_effort);
+            if (cur_quota <= landing_quote) {
+                z_effort.data = 0;
+                z_effort_pub.publish(z_effort);
+                landing_pub.publish(Empty());
+            }
         }
 
-        // logic for detecting error > lambda
-        Point position = lastReceivedPose->pose.position;
-        double error = getError(position);
-        if (error < lambda) {
-            // landing mode
-            if (gettimeofday(&last_landing_time, NULL) < 0) {
-                ROS_ERROR("Error on getting current time");
-                ros_loop_continue(r);
-            }
-        } else {
-            // holding mode
-            timeval current_time;
-            if (gettimeofday(&current_time, NULL) < 0) {
-                ROS_ERROR("Error on getting current time");
-                ros_loop_continue(r);
-            }
-
-        }
-
-        ros_loop_continue(r);
+        ros::spinOnce();
+        r.sleep();
     }
     return 0;
-}
-
-
-void ros_loop_continue(ros::Rate r){
-    ros::spinOnce();
-    r.sleep();
-}
-
-double getError(Point point_) {
-
-    double distance =
-            sqrt((point_.x - point_.x) * (point_.x - point_.x) +
-                 (point_.y-point_.y) *(point_.y-point_.y));
-
-    return distance;
 }

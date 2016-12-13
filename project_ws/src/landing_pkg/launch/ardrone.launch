@@ -37,6 +37,5 @@
         <rosparam param="cov/imu_or">[1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 100000.0]</rosparam>
     </node>
 
-    <node pkg="rosservice" type="rosservice" name="togglecam" args="call --wait /ardrone/togglecam"/>
 
 </launch>

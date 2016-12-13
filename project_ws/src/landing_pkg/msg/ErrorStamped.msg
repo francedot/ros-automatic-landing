@@ -6,4 +6,4 @@ float64 dy
 float64 avg_ex
 float64 avg_ey
 float64 avg_dx
-float64 avg_dys
+float64 avg_dy

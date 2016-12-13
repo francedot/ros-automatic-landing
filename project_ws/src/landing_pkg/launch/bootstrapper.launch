@@ -14,7 +14,7 @@
     <!-- Specifies the velocity (m/s) of the landing phase-->
     <arg name="zeta_land_vel" default="-0.2"/>
 
-    <!-- Specifies a toleratiion in mm from the landing_quota -->
+    <!-- Specifies a toleration in mm from the landing_quota -->
     <arg name="quota_reached_toleration" default="250"/>
 
     <arg name="video_rectified" default="false"/>
@@ -24,7 +24,7 @@
     <node name="quota_monitor" type="quota_monitor" pkg="landing_pkg" output="screen"/>
 
     <!-- BOOTSTRAPPER HELPER NODE -->
-    <node name="boot" type="boot" pkg="landing_pkg" output="screen"/>
+    <!-- <node name="boot" type="boot" pkg="landing_pkg" output="screen"/> -->
 
     <!-- ARDRONE NODE -->
     <include file="$(find landing_pkg)/launch/ardrone.launch"/>
@@ -51,6 +51,7 @@
         <param name="quota_reached_toleration" value="$(arg quota_reached_toleration)"/>
     </node>
 
+    <node name="lander" type="lander" pkg="landing_pkg" output="screen"/>
 
     <!--<node name="rel_graph" type="rqt_graph" pkg="rqt_graph"/>-->
 
