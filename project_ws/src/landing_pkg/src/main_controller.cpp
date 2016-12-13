@@ -43,7 +43,7 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
         /*, const StampedFloat64ConstPtr& yawEffort*/);
 
 /* HELPER FUNCTIONS */
-void ros_loop_continue(ros::Rate r);
+void ros_loop_continue(ros::Rate &r);
 
 double calculate_linear_z();
 
@@ -74,10 +74,6 @@ int main(int argc, char **argv) {
     if (is_reaching_quota_mode) {
         ROS_INFO("main_controller: Entered Reaching Quota Mode");
     }
-
-    landing_pub = nh.advertise<Empty>("/ardrone/land",1);
-
-    z_effort_pub = nh.advertise<Float64>("/ardrone/z_effort",1);
 
     ros::Duration timeout;
     timeout = ros::Duration(1, 0);
@@ -147,7 +143,7 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
     return result;
 }*/
 
-void ros_loop_continue(ros::Rate r) {
+void ros_loop_continue(ros::Rate &r) {
     ros::spinOnce();
     r.sleep();
 }

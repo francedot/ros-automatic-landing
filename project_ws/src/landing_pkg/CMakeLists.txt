@@ -42,6 +42,10 @@ add_executable(mock_data_publisher src/mock_data_publisher.cpp)
 target_link_libraries(mock_data_publisher ${catkin_LIBRARIES})
 add_dependencies(mock_data_publisher landing_pkg_generate_messages_cpp)
 
+add_executable(lander src/lander.cpp)
+target_link_libraries(lander ${catkin_LIBRARIES})
+add_dependencies(lander landing_pkg_generate_messages_cpp)
+
 # add_executable(ar_sys_listener src/ar_sys_listener.cpp)
 # target_link_libraries(ar_sys_listener ${catkin_LIBRARIES})
 # add_dependencies(ar_sys_listener landing_pkg_generate_messages_cpp)

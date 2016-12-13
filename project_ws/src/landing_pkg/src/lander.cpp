@@ -7,10 +7,16 @@
 
 using namespace std;
 using namespace std_msgs;
-using namespace geometry_msgs;
+using namespace landing_pkg;
 
 ErrorStamped cur_pose_error;
 Float64 cur_quota;
+double zeta_land_vel = -1;
+
+ros::Publisher z_effort_pub;
+ros::Publisher landing_pub;
+
+bool enable_landing = false;
 
 /* LANDING PARAMETERS */
 double center_margin = 0.10; // Accepted distance from (0,0) in m
@@ -40,26 +46,33 @@ bool check_landing_conditions() {
             (cur_pose_error.avg_dx < avg_speed_margin) && (cur_pose_error.avg_dy < avg_speed_margin));
 }
 
+void landing_boolean_received(const std_msgs::EmptyConstPtr &e) {
+    enable_landing = !enable_landing;
+}
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "lander");
-    ros::NodeHandle nodeHandle;
+    ros::NodeHandle nh;
     ros::NodeHandle pnh("~");
 
-    pnh.param("lambda",lambda,false);
+
+    landing_pub = nh.advertise<Empty>("/ardrone/land",1);
+    z_effort_pub = nh.advertise<Float64>("/ardrone/z_effort",1);
 
     // create a subscriber object
     ros::Subscriber sub_reach_quota = nh.subscribe("/ardrone/cur_quota", 1, &cur_quota_received);
     ros::Subscriber sub_pose_error = nh.subscribe("/pose_error", 1, &pose_error_received);
+    ros::Subscriber sub_landing_enable = nh.subscribe("/enable_land", 1, &landing_boolean_received);
 
     ros::Rate r(50);
     while (ros::ok()) {
 
-        if (check_landing_conditions()) {
+        if ((enable_landing) && (check_landing_conditions())) {
             ROS_INFO("lander: check_landing_conditions=true");
             Float64 z_effort;
             z_effort.data = zeta_land_vel;
             z_effort_pub.publish(z_effort);
-            if (cur_quota <= landing_quote) {
+            if (cur_quota.data <= landing_quote) {
                 z_effort.data = 0;
                 z_effort_pub.publish(z_effort);
                 landing_pub.publish(Empty());
