@@ -18,6 +18,10 @@ catkin_package(CATKIN_DEPENDS message_runtime)
 ## Build ar_sys_listener
 include_directories(include ${catkin_INCLUDE_DIRS})
 
+add_executable(boot src/boot.cpp)
+target_link_libraries(boot ${catkin_LIBRARIES})
+add_dependencies(boot landing_pkg_generate_messages_cpp)
+
 add_executable(main_controller src/main_controller.cpp)
 target_link_libraries(main_controller ${catkin_LIBRARIES})
 add_dependencies(main_controller landing_pkg_generate_messages_cpp)
@@ -33,6 +37,10 @@ add_dependencies(error_monitor landing_pkg_generate_messages_cpp)
 add_executable(quota_monitor src/quota_monitor.cpp)
 target_link_libraries(quota_monitor ${catkin_LIBRARIES})
 add_dependencies(quota_monitor landing_pkg_generate_messages_cpp)
+
+add_executable(mock_data_publisher src/mock_data_publisher.cpp)
+target_link_libraries(mock_data_publisher ${catkin_LIBRARIES})
+add_dependencies(mock_data_publisher landing_pkg_generate_messages_cpp)
 
 # add_executable(ar_sys_listener src/ar_sys_listener.cpp)
 # target_link_libraries(ar_sys_listener ${catkin_LIBRARIES})

@@ -22,7 +22,7 @@ ErrorStamped cur_pose_error;
 boost::shared_ptr<tf::TransformListener> listener;
 tf::StampedTransform transform;
 ros::Time last_cmd_vel_time;
-Float64ConstPtr cur_quota;
+Float64 cur_quota;
 float last_z_effort = 0.0f;
 bool is_transform_setup = false;
 bool is_in_quota = false;
@@ -36,7 +36,7 @@ double zeta_land_vel = -0.2;
 double quota_reached_toleration = 250;
 
 /* CALLBACKS */
-void cur_quota_received(const Float64ConstPtr &cur_quota_);
+void cur_quota_received(const Float64 &cur_quota_);
 void z_effort_received(const Float64ConstPtr &z_effort);
 void pose_error_received(const ErrorStampedConstPtr &error);
 void effort_received(const StampedFloat64ConstPtr &x_effort,
@@ -62,8 +62,8 @@ int main(int argc, char **argv) {
     listener.reset(new tf::TransformListener);
     tw_effort_pub = nh.advertise<Twist>("cmd_vel", 1);
 
-    ros::Subscriber sub_reach_quota = nh.subscribe("ardrone/cur_quota", 1, &cur_quota_received);
-    ros::Subscriber sub_z_effort = nh.subscribe("ardrone/z_effort", 1, &z_effort_received);
+    ros::Subscriber sub_reach_quota = nh.subscribe("/ardrone/cur_quota", 1, &cur_quota_received);
+    ros::Subscriber sub_z_effort = nh.subscribe("/ardrone/z_effort", 1, &z_effort_received);
     ros::Subscriber sub_pose_error = nh.subscribe("/pose_error", 1, &pose_error_received);
 
     /* X,Y Efforts Synchronization */
@@ -73,8 +73,10 @@ int main(int argc, char **argv) {
     Synchronizer<MySyncPolicy> sync(MySyncPolicy(10), x_effort_sub, y_effort_sub);
     sync.registerCallback(&effort_received);
 
-    is_reaching_quota_mode = true;
-    ROS_INFO("main_controller: Entered Reaching Quota Mode");
+    is_reaching_quota_mode = has_to_reach_quota;
+    if (is_reaching_quota_mode) {
+        ROS_INFO("main_controller: Entered Reaching Quota Mode");
+    }
 
     ros::Duration timeout;
     timeout = ros::Duration(1, 0);
@@ -98,9 +100,9 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void cur_quota_received(const Float64ConstPtr &cur_quota_) {
-    cur_quota = cur_quota;
-    ROS_INFO("main_controller: Received quota %lf", cur_quota->data);
+void cur_quota_received(const Float64 &cur_quota_) {
+    cur_quota = cur_quota_;
+    ROS_INFO("main_controller: Received quota %lf", cur_quota.data);
 }
 
 void z_effort_received(const Float64ConstPtr &z_effort) {
@@ -145,13 +147,13 @@ double calculate_linear_z() {
 
     if (is_reaching_quota_mode) {
 
-        double z_error_abs = abs(cur_quota->data - landing_quota);
+        double z_error_abs = abs(cur_quota.data - landing_quota);
 
         is_in_quota = z_error_abs > landing_quota - quota_reached_toleration &&
                       z_error_abs < landing_quota + quota_reached_toleration;
 
         if (!is_in_quota) {
-            bool is_negative_z_effort = cur_quota->data > landing_quota;
+            bool is_negative_z_effort = cur_quota.data > landing_quota;
             result = (is_negative_z_effort ? -1 : 1) * zeta_land_vel;
         } else {
             is_reaching_quota_mode = false;

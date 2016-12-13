@@ -1,10 +1,5 @@
 <launch>
 
-    <!--
-        N.B: respawn="true" since ros_topic may not find a published /k_pose at startup.
-        In this case we relaunch it.
-    -->
- 
     <!-- same as: -->
     <!--rosrun topic_tools transform /ar_single_board/pose /x_pose std_msgs/Float64 'm.pose.position.x'-->
 

@@ -1,0 +1,20 @@
+<launch>
+
+    <!-- Enables receiving efforts in main_controller -->
+    <arg name="efforts_enabled" default="true"/>
+
+    <!-- Specifies if drone has to reach landing_quota at startup -->
+    <arg name="has_to_reach_quota" default="true"/>
+
+    <!-- If landing_quota is true, specifies the quota in mm at which the landing phase starts -->
+    <arg name="landing_quota" default="2000"/>
+
+    <!-- Specifies the velocity (m/s) of the landing phase-->
+    <arg name="zeta_land_vel" default="-0.2"/>
+
+    <!-- Specifies a toleratiion in mm from the landing_quota -->
+    <arg name="quota_reached_toleration" default="250"/>
+
+    <arg name="video_rectified" default="false"/>
+
+</launch>

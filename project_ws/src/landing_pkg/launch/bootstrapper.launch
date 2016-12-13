@@ -1,6 +1,31 @@
 <!--Basic Launch file incuding node & arguments components-->
 <launch>
-    <arg name="enabled" default="true"/>
+
+    <!-- ARGUMENTS REGION -->
+    !-- Enables receiving efforts in main_controller -->
+    <arg name="efforts_enabled" default="true"/>
+
+    <!-- Specifies if drone has to reach landing_quota at startup -->
+    <arg name="has_to_reach_quota" default="false"/>
+
+    <!-- If landing_quota is true, specifies the quota in mm at which the landing phase starts -->
+    <arg name="landing_quota" default="2000"/>
+
+    <!-- Specifies the velocity (m/s) of the landing phase-->
+    <arg name="zeta_land_vel" default="-0.2"/>
+
+    <!-- Specifies a toleratiion in mm from the landing_quota -->
+    <arg name="quota_reached_toleration" default="250"/>
+
+    <arg name="video_rectified" default="false"/>
+
+    <!-- MONITOR NODES -->
+    <node name="error_monitor" type="error_monitor" pkg="landing_pkg" output="screen"/>
+    <node name="quota_monitor" type="quota_monitor" pkg="landing_pkg" output="screen"/>
+
+    <!-- BOOTSTRAPPER HELPER NODE -->
+    <node name="boot" type="boot" pkg="landing_pkg" output="screen"/>
+
     <!-- ARDRONE NODE -->
     <include file="$(find landing_pkg)/launch/ardrone.launch"/>
     <!--or with ardrone simulator in gazebo-->
@@ -8,25 +33,24 @@
 
     <!-- ARSYS NODE -->
     <include file="$(find landing_pkg)/launch/arsys.launch"/>
-    <!--<include file="$(find ar_sys)/launch/single_board.launch"/>-->
+    <!-- ARSYS MOCK NODE -->
+    <!-- <node name="mock_data_publisher" type="mock_data_publisher" pkg="landing_pkg" output="screen"/> -->
 
-    <!-- TRANSFORMATIONS NODES (From PoseStamped to x, y, z float -->
+    <!-- TRANSFORMATIONS NODES (From PoseStamped to x, y, z) -->
     <include file="$(find landing_pkg)/launch/transformations.launch"/>
 
     <!-- PID X, Y, Z -->
-    <include file="$(find landing_pkg)/launch/position_pids.launch"/>    
+    <include file="$(find landing_pkg)/launch/position_pids.launch"/>
 
+    <!-- DRONE CONTROLLER-->
     <node name="main_controller" type="main_controller" pkg="landing_pkg" output="screen">
-        <param name="enabled" value="$(arg enabled)"/>
-        <param name="has_to_reach_quota" value="true"/>
-        <param name="landing_quota" value="2000"/>
-        <param name="zeta_land_vel" value="0.2"/>
-        <param name="quota_reached_toleration" value="250"/>
+        <param name="enabled" value="$(arg efforts_enabled)"/>
+        <param name="has_to_reach_quota" value="$(arg has_to_reach_quota)"/>
+        <param name="landing_quota" value="$(arg landing_quota)"/>
+        <param name="zeta_land_vel" value="$(arg zeta_land_vel)"/>
+        <param name="quota_reached_toleration" value="$(arg quota_reached_toleration)"/>
     </node>
 
-    <arg name="video_rectified" default="false" />
-
-    <node name="quota_monitor" type="quota_monitor" pkg="landing_pkg" output="screen"/>
 
     <!--<node name="rel_graph" type="rqt_graph" pkg="rqt_graph"/>-->
 

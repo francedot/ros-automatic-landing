@@ -11,10 +11,10 @@ using namespace ardrone_autonomy;
 ros::Publisher quota_pub;
 
 // a callback function
-void navdataReceived(const NavdataConstPtr &navdataReceived) {
+void navdata_received(const NavdataConstPtr &navdata) {
 
     // altd given in cm from navdata
-    double quota = (double) navdataReceived->altd * 10; // to uniform as mm
+    double quota = navdata->altd * 10.0; // to uniform as mm
 
     Float64 alt;
     alt.data = quota;
@@ -27,9 +27,9 @@ int main(int argc, char **argv) {
     ros::init(argc, argv, "quota_monitor");
     ros::NodeHandle nh;
 
-    ros::Subscriber sub = nh.subscribe("ardrone/navdata", 1, &navdataReceived);
+    ros::Subscriber sub = nh.subscribe("/ardrone/navdata", 1, &navdata_received);
 
-    quota_pub = nh.advertise<Float64>("ardrone/cur_quota", 1);
+    quota_pub = nh.advertise<Float64>("/ardrone/cur_quota", 1);
 
     ros::spin();
 
