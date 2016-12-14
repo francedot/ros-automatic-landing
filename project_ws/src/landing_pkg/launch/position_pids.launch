@@ -12,9 +12,9 @@
     <node name="x_pid" pkg="pid" type="controller" output="screen">
       <remap from="/state" to="x_pose"/>
       <remap from="/control_effort" to="x_effort"/>
-      <param name="Kp" value="0.85" />
+      <param name="Kp" value="0.7" />
       <param name="Ki" value="0.0" />
-      <param name="Kd" value="0.8" />
+      <param name="Kd" value="1.5" />
       <param name="upper_limit" value="10" />
       <param name="lower_limit" value="-10" />
       <!--<param name="windup_limit" value="10" />-->
@@ -28,9 +28,9 @@
     <node name="y_pid" pkg="pid" type="controller" output="screen">
       <remap from="/state" to="y_pose"/>
       <remap from="/control_effort" to="y_effort"/>
-      <param name="Kp" value="0.85" />
+      <param name="Kp" value="0.7" />
       <param name="Ki" value="0.0" />
-      <param name="Kd" value="0.8" />
+      <param name="Kd" value="1.5" />
       <param name="upper_limit" value="10" />
       <param name="lower_limit" value="-10" />
       <!--<param name="windup_limit" value="10" />
@@ -39,22 +39,6 @@
       <param name="max_loop_frequency" value="105.0" />
       <param name="min_loop_frequency" value="95.0" />
       <param name="setpoint" value="0" />
-    </node>
-
-    <node name="z_pid" pkg="pid" type="controller" output="screen">
-          <remap from="/state" to="z_pose"/>
-          <remap from="/control_effort" to="z_effort"/>
-          <param name="Kp" value="0.66" />
-          <param name="Ki" value="0.0" />
-          <param name="Kd" value="0.92" />
-          <param name="upper_limit" value="10" />
-          <param name="lower_limit" value="-10" />
-          <!--<param name="windup_limit" value="10" />
-          <param name="cutoff_frequency" value="20" />-->
-          <param name="diagnostic_period" value="0.25" />
-          <param name="max_loop_frequency" value="105.0" />
-          <param name="min_loop_frequency" value="95.0" />
-          <param name="setpoint" value="0" />
     </node>
 
     <node name="yaw_pid" pkg="pid" type="controller" output="screen">

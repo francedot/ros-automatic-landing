@@ -1,32 +1,33 @@
 #include <ros/ros.h>
+#include <cmath>
 #include <std_msgs/Header.h>
 #include <landing_pkg/ErrorStamped.h>
 #include <geometry_msgs/PoseStamped.h>
 
 // error on x and y
-double ex;
-double ey;
+double ex = 0.0;
+double ey = 0.0;
 
 // derivative of x and y
-double dx;
-double dy;
+double dx = 0.0;
+double dy = 0.0;
 
 // Average of the above variables in the last n
 // seconds where n is indicated by average_seconds
-double avg_ex;
-double avg_ey;
-double avg_dx;
-double avg_dy;
-long avg_index;
+double avg_ex = 0.0;
+double avg_ey = 0.0;
+double avg_dx = 0.0;
+double avg_dy = 0.0;
+long avg_index = 0.0;
 
-double last_ex;
-double last_ey;
+double last_ex = 0.0;
+double last_ey = 0.0;
 
 ros::Time prev_time;
 ros::Duration delta_t;
 
-//average_seconds set to 5 seconds
-ros::Duration average_seconds = ros::Duration(5,0);
+//average_seconds set to 7 seconds
+ros::Duration average_seconds = ros::Duration(7,0);
 ros::Time start_of_average;
 
 ros::Publisher error_pub;
@@ -48,6 +49,7 @@ int main(int argc, char **argv) {
 
 void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg) {
     if(!prev_time.isZero()) {
+        ROS_INFO("COOOOOOOOKU!");
         delta_t = ros::Time::now() - prev_time;
         prev_time = ros::Time::now();
         if(0 == delta_t.toSec()){
@@ -66,11 +68,12 @@ void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg) {
     // Assuming setpoint = (0,0)
     last_ex = ex;
     last_ey = ey;
-    ex = stamped_msg->pose.position.x;
-    ey = stamped_msg->pose.position.y;
+    ex = fabs(stamped_msg->pose.position.x);
+    ey = fabs(stamped_msg->pose.position.y);
 
-    dx = (ex - last_ex) / delta_t.toSec();
-    dy = (ey - last_ey) / delta_t.toSec();
+
+    dx = fabs(ex - last_ex) / delta_t.toSec();
+    dy = fabs(ey - last_ey) / delta_t.toSec();
 
     if(ros::Time::now() - start_of_average >= average_seconds) {
         avg_ex = 0;

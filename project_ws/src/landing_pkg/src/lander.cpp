@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Empty.h>
 #include <std_msgs/Float64.h>
+#include <geometry_msgs/Twist.h>
 #include <landing_pkg/ErrorStamped.h>
 
 using namespace std;
@@ -23,20 +24,20 @@ double center_margin = 0.10; // Accepted distance from (0,0) in m
 double speed_margin = 1; // Accepted position variation in m/s
 double avg_center_margin = 0.8;
 double avg_speed_margin = 0.5;
-double landing_quote = 0.6; // Quote for landing signal
+double landing_quote = 0.4; // Quote for landing signal
 
 void cur_quota_received(const Float64 &cur_quota_) {
     cur_quota = cur_quota_;
-    ROS_INFO("lander: Received quota %lf", cur_quota.data);
+    //ROS_INFO("lander: Received quota %lf", cur_quota.data);
 }
 
 void pose_error_received(const ErrorStampedConstPtr &error) {
     cur_pose_error = *error;
-    ROS_INFO(
+    /*ROS_INFO(
             "lander: Received pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
             cur_pose_error.ex, cur_pose_error.ey, cur_pose_error.dx, cur_pose_error.dy, cur_pose_error.avg_ex,
             cur_pose_error.avg_ey,
-            cur_pose_error.avg_dx, cur_pose_error.avg_dy);
+            cur_pose_error.avg_dx, cur_pose_error.avg_dy);*/
 }
 
 bool check_landing_conditions() {
@@ -57,7 +58,7 @@ int main(int argc, char **argv) {
 
 
     landing_pub = nh.advertise<Empty>("/ardrone/land",1);
-    z_effort_pub = nh.advertise<Float64>("/ardrone/z_effort",1);
+    z_effort_pub = nh.advertise<Float64>("/z_effort",1);
 
     // create a subscriber object
     ros::Subscriber sub_reach_quota = nh.subscribe("/ardrone/cur_quota", 1, &cur_quota_received);

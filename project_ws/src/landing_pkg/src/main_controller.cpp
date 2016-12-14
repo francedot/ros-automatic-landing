@@ -23,7 +23,7 @@ Twist next_twist;
 boost::shared_ptr <tf::TransformListener> listener;
 tf::StampedTransform transform;
 ros::Time last_cmd_vel_time;
-float last_z_effort = 0.0f;
+double last_z_effort = 0.0;
 bool is_transform_setup = false;
 bool is_in_quota = false;
 bool is_reaching_quota_mode;
@@ -47,6 +47,9 @@ void ros_loop_continue(ros::Rate &r);
 
 double calculate_linear_z();
 
+void z_effort_received(const Float64 &z) {
+    last_z_effort = z.data;
+}
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "main_controller");
@@ -70,6 +73,8 @@ int main(int argc, char **argv) {
     Synchronizer <MySyncPolicy> sync(MySyncPolicy(10), x_effort_sub, y_effort_sub);
     sync.registerCallback(&effort_received);
 
+    ros::Subscriber z_effort_sub = nh.subscribe("/z_effort", 1, &z_effort_received);
+
     is_reaching_quota_mode = has_to_reach_quota;
     if (is_reaching_quota_mode) {
         ROS_INFO("main_controller: Entered Reaching Quota Mode");
@@ -83,7 +88,7 @@ int main(int argc, char **argv) {
         if (ros::Time::now() - last_cmd_vel_time > timeout) {
             next_twist.linear.x = 0;
             next_twist.linear.y = 0;
-            //next_twist.linear.z = 0;
+            next_twist.linear.z = 0;
             next_twist.angular.x = 0;
             next_twist.angular.y = 0;
             next_twist.angular.z = 0;
@@ -116,6 +121,7 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
     linear = (transform * linear) - (transform * tf::Vector3(0, 0, 0));
     next_twist.linear.x = linear.x();
     next_twist.linear.y = linear.y();
+    next_twist.linear.z = last_z_effort;
     last_cmd_vel_time = ros::Time::now();
 }
 
