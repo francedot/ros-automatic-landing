@@ -1,0 +1,8 @@
+#goal definition
+bool toggle
+---
+#result definition
+bool is_landed
+---
+#feedback
+int32[] sequence
