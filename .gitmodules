@@ -1,3 +1,7 @@
 [submodule "pid"]
 	path = project_ws/src/pid
 	url = https://github.com/francibon93/pid
+
+[submodule "ar_sys"]
+	path = project_ws/src/ar_sys
+	url = https://github.com/francibon93/ar_sys.git
