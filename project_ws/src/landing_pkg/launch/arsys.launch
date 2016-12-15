@@ -26,7 +26,7 @@
 	<arg name="marker_size" default="0.0115" />
 	<arg name="publish_tf" default="false" />
 
-	<node ns="/" pkg="ar_sys" type="single_board" name="ar_single_board$(arg uid)" output="screen">
+	<node ns="/" pkg="ar_sys" type="single_board" name="ar_single_board$(arg uid)">
 		<remap from="/camera_info" to="$(arg video_namespace)/$(arg video_info_topic)" />
 		<remap from="/image" to="$(arg video_namespace)/$(arg video_image_topic)" />
 

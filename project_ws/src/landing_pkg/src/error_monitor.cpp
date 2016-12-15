@@ -1,5 +1,4 @@
 #include <ros/ros.h>
-#include <cmath>
 #include <std_msgs/Header.h>
 #include <landing_pkg/ErrorStamped.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -89,9 +88,9 @@ void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg) {
     iteration++;
 
     error_pub.publish(output_error);
-    ROS_INFO("error_monitor: Sent pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
+/*    ROS_INFO("error_monitor: Sent pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
              output_error.ex, output_error.ey, output_error.dx, output_error.dy, output_error.avg_ex, output_error.avg_ey,
-             output_error.avg_dx, output_error.avg_dy);
+             output_error.avg_dx, output_error.avg_dy);*/
 }
 
 double update_average(double new_val, double *average_array, const int size) {

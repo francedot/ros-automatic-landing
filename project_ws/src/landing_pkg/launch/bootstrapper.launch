@@ -19,6 +19,12 @@
 
     <arg name="video_rectified" default="false"/>
 
+    <arg name="center_margin" default="0.009"/>
+    <arg name="speed_margin" default="0.018"/>
+    <arg name="avg_center_margin" default="0.018"/>
+    <arg name="avg_speed_margin" default="0.018"/>
+    <arg name="landing_quote" default="280.0"/>
+
     <!-- MONITOR NODES -->
     <node name="error_monitor" type="error_monitor" pkg="landing_pkg" output="screen"/>
     <node name="quota_monitor" type="quota_monitor" pkg="landing_pkg" output="screen"/>
@@ -51,7 +57,13 @@
         <param name="quota_reached_toleration" value="$(arg quota_reached_toleration)"/>
     </node>
 
-    <node name="lander" type="lander" pkg="landing_pkg" output="screen"/>
+    <node name="lander" type="lander" pkg="landing_pkg" output="screen">
+        <param name="center_margin" value="$(arg center_margin)"/>
+        <param name="speed_margin" value="$(arg speed_margin)"/>
+        <param name="avg_center_margin" value="$(arg avg_center_margin)"/>
+        <param name="avg_speed_margin" value="$(arg avg_speed_margin)"/>
+        <param name="landing_quote" value="$(arg landing_quote)"/>
+    </node>
 
     <!--<node name="rel_graph" type="rqt_graph" pkg="rqt_graph"/>-->
 

@@ -39,8 +39,8 @@ double quota_reached_toleration = 250;
 void pose_error_received(const ErrorStampedConstPtr &error);
 
 void effort_received(const StampedFloat64ConstPtr &x_effort,
-                     const StampedFloat64ConstPtr &y_effort
-        /*, const StampedFloat64ConstPtr& yawEffort*/);
+                     const StampedFloat64ConstPtr &y_effort/*,
+         const StampedFloat64ConstPtr& yaw_effort*/);
 
 /* HELPER FUNCTIONS */
 void ros_loop_continue(ros::Rate &r);
@@ -69,6 +69,9 @@ int main(int argc, char **argv) {
     /* X,Y Efforts Synchronization */
     message_filters::Subscriber <StampedFloat64> x_effort_sub(nh, "x_effort", 1);
     message_filters::Subscriber <StampedFloat64> y_effort_sub(nh, "y_effort", 1);
+    //message_filters::Subscriber <StampedFloat64> yaw_effort_sub(nh, "yaw_effort", 1);
+    //typedef sync_policies::ExactTime <StampedFloat64, StampedFloat64, StampedFloat64> MySyncPolicy;
+    //Synchronizer <MySyncPolicy> sync(MySyncPolicy(10), x_effort_sub, y_effort_sub, yaw_effort_sub);
     typedef sync_policies::ExactTime <StampedFloat64, StampedFloat64> MySyncPolicy;
     Synchronizer <MySyncPolicy> sync(MySyncPolicy(10), x_effort_sub, y_effort_sub);
     sync.registerCallback(&effort_received);
@@ -102,8 +105,8 @@ int main(int argc, char **argv) {
 }
 
 void effort_received(const StampedFloat64ConstPtr &x_effort,
-                     const StampedFloat64ConstPtr &y_effort
-        /*, const StampedFloat64ConstPtr& yawEffort*/) {
+                     const StampedFloat64ConstPtr &y_effort/*,
+        const StampedFloat64ConstPtr& yaw_effort*/) {
     if (!enabled)
         return;
 
@@ -118,36 +121,15 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
         }
     }
     tf::Vector3 linear(x_effort->c, y_effort->c, 0);
+   // tf::Vector3 angular(0,0, yaw_effort->c);
     linear = (transform * linear) - (transform * tf::Vector3(0, 0, 0));
+    //angular = (transform * angular) - (transform * tf::Vector3(0,0,0));
     next_twist.linear.x = linear.x();
     next_twist.linear.y = linear.y();
+    //next_twist.angular.z = angular.z();
     next_twist.linear.z = last_z_effort;
     last_cmd_vel_time = ros::Time::now();
 }
-
-/*double calculate_linear_z() {
-
-    double result = last_z_effort;
-
-    if (is_reaching_quota_mode) {
-
-        double z_error_abs = abs(cur_quota.data - landing_quota);
-
-        is_in_quota = z_error_abs > landing_quota - quota_reached_toleration &&
-                      z_error_abs < landing_quota + quota_reached_toleration;
-
-        if (!is_in_quota) {
-            bool is_negative_z_effort = cur_quota.data > landing_quota;
-            result = (is_negative_z_effort ? -1 : 1) * zeta_land_vel;
-        } else {
-            is_reaching_quota_mode = false;
-        }
-    }
-
-    last_z_effort = result;
-
-    return result;
-}*/
 
 void ros_loop_continue(ros::Rate &r) {
     ros::spinOnce();
