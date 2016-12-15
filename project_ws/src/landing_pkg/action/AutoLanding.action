@@ -1,8 +1,8 @@
 #goal definition
-int32 toggle
+bool toggle
 ---
 #result definition
-int32 is_landed
+bool is_landed
 ---
 #feedback
 int32[] sequence

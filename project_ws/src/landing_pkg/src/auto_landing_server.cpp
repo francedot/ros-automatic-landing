@@ -26,6 +26,9 @@ public:
     void goalCB() {
         // accept the new goal
         toggle_ = as_.acceptNewGoal()->toggle;
+        if (toggle_) {
+            system("roslaunch landing_pkg bootstrapper.launch");
+        }
     }
 
     void preemptCB() {
@@ -64,7 +67,6 @@ protected:
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "AutoLanding");
-
     AutoLandingAction AutoLanding(ros::this_node::getName());
     ros::spin();
 

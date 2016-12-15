@@ -53,6 +53,12 @@ add_executable(lander src/lander.cpp)
 target_link_libraries(lander ${catkin_LIBRARIES})
 add_dependencies(lander landing_pkg_generate_messages_cpp)
 
+add_executable(auto_landing_server src/auto_landing_server.cpp)
+target_link_libraries(auto_landing_server ${catkin_LIBRARIES})
+
+add_executable(auto_landing_client src/auto_landing_client.cpp)
+target_link_libraries(auto_landing_client ${catkin_LIBRARIES})
+
 # add_executable(ar_sys_listener src/ar_sys_listener.cpp)
 # target_link_libraries(ar_sys_listener ${catkin_LIBRARIES})
 # add_dependencies(ar_sys_listener landing_pkg_generate_messages_cpp)
