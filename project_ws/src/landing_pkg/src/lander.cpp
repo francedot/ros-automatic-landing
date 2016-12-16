@@ -42,7 +42,9 @@ double avg_speed_margin = 0.02;
 double landing_quote = 200.0; // Quote for landing signal
 double recovering_quote = 650.0;
 double recovering_speed = 0.2;
-double switching_board_quote = 300.0;
+double initial_switching_quote = 300.0;
+double switching_board_quote = initial_switching_quote;
+double switching_margin = 50.0;
 
 void cur_quota_received(const NavdataConstPtr &navdata);
 
@@ -57,9 +59,11 @@ void switch_board() {
     switch (drone_status) {
         case descending: {
             board.data = "inner";
+            switching_board_quote = initial_switching_quote + switching_margin;
             } break;
         case rising: {
             board.data = "outer";
+            switching_board_quote = initial_switching_quote - switching_margin;
             } break;
         ROS_ERROR("Switch board called in state: %d.\n", drone_status);
     }
@@ -109,8 +113,8 @@ int main(int argc, char **argv) {
                     break;
                 case descending: {
                     ROS_INFO("Status: Descending. Alt: %lf.",cur_quota);
-                    if(cur_quota <= switching_board_quote)
-                        switch_board();
+                    //if(cur_quota <= switching_board_quote)
+                        //switch_board();
                     if (cur_quota <= landing_quote) {
                         drone_status = landing;
                         break;
@@ -133,8 +137,8 @@ int main(int argc, char **argv) {
                     break;
                 case rising: {
                     ROS_INFO("Status: Rising. Alt: %lf.",cur_quota);
-                    if(cur_quota > switching_board_quote)
-                        switch_board();
+                    //if(cur_quota > switching_board_quote)
+                        //switch_board();
                     if(cur_quota >= recovering_quote) {
                         z_effort.data = 0;
                         drone_status = stabilizing;
@@ -175,7 +179,7 @@ void landing_boolean_received(const std_msgs::EmptyConstPtr &e) {
 bool check_landing_conditions() {
     double k = 1;
     if(descending == drone_status)
-        k = 2.0;
+        k = 1.8;
     return ((cur_pose_error.ex < (k * center_margin)) && (cur_pose_error.ey < (k * center_margin)) &&
             (cur_pose_error.dx < (k * speed_margin)) && (cur_pose_error.dy < (k * speed_margin)) &&
             (cur_pose_error.avg_ex < (k * avg_center_margin)) && (cur_pose_error.avg_ey < (k * avg_center_margin)) &&

@@ -23,7 +23,7 @@
     <arg name="speed_margin" default="0.014"/>
     <arg name="avg_center_margin" default="0.06"/>
     <arg name="avg_speed_margin" default="0.014"/>
-    <arg name="landing_quote" default="250.0"/>
+    <arg name="landing_quote" default="220.0"/>
 
     <!-- MONITOR NODES -->
     <node name="error_monitor" type="error_monitor" pkg="landing_pkg" output="screen"/>
