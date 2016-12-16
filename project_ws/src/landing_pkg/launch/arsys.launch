@@ -21,7 +21,7 @@
 
 	<!--Switch board here-->
 	<arg name="board_config_outer" default="$(find landing_pkg)/boards/custom_board4x4_outer.yml" />
-	<arg name="board_config_inner" default="$(find landing_pkg)/boards/custom_board4x4_inner.yml" />
+	<arg name="board_config_inner" default="$(find landing_pkg)/boards/custom_board3x3.yml" />
 	<arg name="board_frame_id" default="board1" />
 	<!--Change marker cell size here TODO Antonio: Measure both-->
 	<arg name="marker_size_outer" default="0.0115" />
