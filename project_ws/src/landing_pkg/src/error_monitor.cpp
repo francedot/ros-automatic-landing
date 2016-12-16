@@ -1,7 +1,15 @@
 #include <ros/ros.h>
 #include <std_msgs/Header.h>
 #include <landing_pkg/ErrorStamped.h>
+#include <ardrone_autonomy/Navdata.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <message_filters/subscriber.h>
+#include <message_filters/synchronizer.h>
+#include <message_filters/sync_policies/approximate_time.h>
+
+using namespace message_filters;
+using namespace ardrone_autonomy;
+using namespace geometry_msgs;
 
 // error on x and y
 double ex = 0.0;
@@ -33,6 +41,9 @@ ros::Duration delta_t;
 
 ros::Publisher error_pub;
 
+//void altitude_error_received(const PoseStampedConstPtr &stamped_msg,const NavdataConstPtr &navdata);
+//void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg, landing_pkg::ErrorStamped *output_error);
+
 void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg);
 double update_average(double new_val, double *average_array, const int size);
 
@@ -42,9 +53,66 @@ int main(int argc, char **argv) {
     ros::NodeHandle nh;
     ros::Subscriber pose_sub = nh.subscribe("/ar_single_board/pose", 1, on_error_update);
     error_pub = nh.advertise<landing_pkg::ErrorStamped>("/pose_error", 1);
+    /*Subscriber <PoseStamped> error_sub(nh, "/ar_single_board/pose", 1);
+    Subscriber <Navdata> navdata_sub(nh, "/ardrone/navdata", 1);
+    typedef sync_policies::ApproximateTime <PoseStamped,Navdata> MySyncPolicy;
+    Synchronizer <MySyncPolicy> sync(MySyncPolicy(10), error_sub, navdata_sub);
+    sync.registerCallback(&altitude_error_received);*/
+
     ros::spin();
     return 0;
 }
+
+/*
+void altitude_error_received(const PoseStampedConstPtr &stamped_msg,const NavdataConstPtr &navdata) {
+    landing_pkg::ErrorStamped output_error;
+    on_error_update(stamped_msg, &output_error);
+    output_error.altitude = navdata->altd;
+    error_pub.publish(output_error);
+}
+
+
+void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg, landing_pkg::ErrorStamped *output_error) {
+    if(!prev_time.isZero()) {
+        delta_t = ros::Time::now() - prev_time;
+        prev_time = ros::Time::now();
+        if(0 == delta_t.toSec()){
+            ROS_ERROR("error_monitor: delta_t to zero: cannot compute derivative.\n");
+            return;
+        }
+    }else{
+        ex = fabs(stamped_msg->pose.position.x);
+        ey = fabs(stamped_msg->pose.position.y);
+        prev_time = ros::Time::now();
+        return;
+    }
+    // Assuming setpoint = (0,0)
+    last_ex = ex;
+    last_ey = ey;
+    ex = fabs(stamped_msg->pose.position.x);
+    ey = fabs(stamped_msg->pose.position.y);
+
+    dx = fabs(ex - last_ex) / delta_t.toSec();
+    dy = fabs(ey - last_ey) / delta_t.toSec();
+
+    avg_ex = update_average(ex,avg_ex_samples, number_of_samples);
+    avg_ey = update_average(ey,avg_ey_samples, number_of_samples);
+    avg_dx = update_average(dx,avg_dx_samples, number_of_samples);
+    avg_dy = update_average(dy,avg_dy_samples, number_of_samples);
+
+    output_error->header = stamped_msg->header;
+    output_error->ex = ex;
+    output_error->ey = ey;
+    output_error->dx = dx;
+    output_error->dy = dy;
+    output_error->avg_ex = avg_ex;
+    output_error->avg_ey = avg_ey;
+    output_error->avg_dx = avg_dx;
+    output_error->avg_dy = avg_dy;
+
+    iteration++;
+}*/
+
 
 void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg) {
     if(!prev_time.isZero()) {
@@ -88,7 +156,7 @@ void on_error_update(const geometry_msgs::PoseStampedConstPtr &stamped_msg) {
     iteration++;
 
     error_pub.publish(output_error);
-/*    ROS_INFO("error_monitor: Sent pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
+    /*ROS_INFO("error_monitor: Sent pose_error (ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
              output_error.ex, output_error.ey, output_error.dx, output_error.dy, output_error.avg_ex, output_error.avg_ey,
              output_error.avg_dx, output_error.avg_dy);*/
 }

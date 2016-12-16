@@ -26,7 +26,6 @@ ros::Publisher switch_board_pub;
 ros::Publisher landing_pub;
 
 bool enable_landing = false;
-bool print_data = true;
 
 enum drone_status {
     stabilizing, descending, rising, landing
@@ -40,7 +39,7 @@ double speed_margin = 0.02; // Accepted position variation in m/s
 double avg_center_margin = 0.02;
 double avg_speed_margin = 0.02;
 double landing_quote = 300.0; // Quote for landing signal
-double recovering_quote = 600.0;
+double recovering_quote = 650.0;
 double recovering_speed = 0.2;
 
 void cur_quota_received(const NavdataConstPtr &navdata) {
@@ -57,13 +56,6 @@ void pose_error_received(const ErrorStampedConstPtr &error) {
             cur_pose_error.avg_dx, cur_pose_error.avg_dy);*/
 }
 
-/*bool check_landing_conditions() {
-    return ((cur_pose_error.ex < center_margin) && (cur_pose_error.ey < center_margin) &&
-            (cur_pose_error.dx < speed_margin) && (cur_pose_error.dy < speed_margin) &&
-            (cur_pose_error.avg_ex < avg_center_margin) && (cur_pose_error.avg_ey < avg_center_margin) &&
-            (cur_pose_error.avg_dx < avg_speed_margin) && (cur_pose_error.avg_dy < avg_speed_margin));
-}*/
-
 void landing_boolean_received(const std_msgs::EmptyConstPtr &e) {
     enable_landing = !enable_landing;
 }
@@ -71,7 +63,7 @@ void landing_boolean_received(const std_msgs::EmptyConstPtr &e) {
 bool check_landing_conditions() {
     double k = 1;
     if(descending == drone_status)
-        k = 3.0;
+        k = 2.0;
     return ((cur_pose_error.ex < (k * center_margin)) && (cur_pose_error.ey < (k * center_margin)) &&
             (cur_pose_error.dx < (k * speed_margin)) && (cur_pose_error.dy < (k * speed_margin)) &&
             (cur_pose_error.avg_ex < (k * avg_center_margin)) && (cur_pose_error.avg_ey < (k * avg_center_margin)) &&
@@ -131,7 +123,8 @@ int main(int argc, char **argv) {
                         z_effort.data = zeta_land_vel;
                         z_effort_pub.publish(z_effort);
                     } else {
-                        drone_status = rising;
+                        if(cur_quota <= recovering_quote)
+                            drone_status = rising;
                     }
                 }   break;
                 case landing: {
@@ -156,27 +149,6 @@ int main(int argc, char **argv) {
                     break;
             }
         }
-        /*if ((enable_landing) && (check_landing_conditions())) {
-            Float64 z_effort;
-            z_effort.data = zeta_land_vel;
-            z_effort_pub.publish(z_effort);
-            ROS_INFO("cur %f, landing %f", cur_quota, landing_quote);
-            if (cur_quota <= landing_quote) {
-                z_effort.data = 0;
-                zeta_land_vel = 0;
-                z_effort_pub.publish(z_effort);
-                if (print_data)
-                    ROS_INFO(
-                            "lander: Received pose_error (quota=%lf || ex=%lf, ey=%lf, dx=%lf, dy=%lf, avg_ex=%lf, avg_ey=%lf, avg_dx=%lf, avg_dy=%lf)",
-                            cur_quota, cur_pose_error.ex, cur_pose_error.ey, cur_pose_error.dx, cur_pose_error.dy,
-                            cur_pose_error.avg_ex,
-                            cur_pose_error.avg_ey,
-                            cur_pose_error.avg_dx, cur_pose_error.avg_dy);
-                print_data = false;
-                landing_pub.publish(Empty());
-            }
-        }*/
-
         ros::spinOnce();
         r.sleep();
     }
