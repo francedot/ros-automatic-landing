@@ -7,6 +7,7 @@
 #include <ardrone_autonomy/Navdata.h>
 #include <landing_pkg/ErrorStamped.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <std_msgs/String.h>
 
 
 using namespace std;
@@ -20,6 +21,8 @@ double cur_quota;
 double zeta_land_vel = -0.5;
 
 ros::Publisher z_effort_pub;
+/* Aggiunto Fra*/
+ros::Publisher switch_board_pub;
 ros::Publisher landing_pub;
 
 bool enable_landing = false;
@@ -80,11 +83,24 @@ int main(int argc, char **argv) {
     landing_pub = nh.advertise<Empty>("/ardrone/land",1);
     z_effort_pub = nh.advertise<Float64>("/z_effort",1);
 
+    /* Aggiunto Fra*/
+    switch_board_pub = nh.advertise<String>("/switch_board",1);
+
     // create a subscriber object
    // ros::Subscriber sub_odometry = nh.subscribe("/ardrone/odometry",1,&odometry_received);
     ros::Subscriber sub_reach_quota = nh.subscribe("/ardrone/navdata", 1, &cur_quota_received);
     ros::Subscriber sub_pose_error = nh.subscribe("/pose_error", 1, &pose_error_received);
     ros::Subscriber sub_landing_enable = nh.subscribe("/enable_land", 1, &landing_boolean_received);
+
+    // TODO Antonio: Nel momento in cui scendiamo sotto una CERTA quota o saliamo sopra una CERTA quota
+    // TODO dobbiamo notificare il nodo modificato ar_sys di switchare rappresentazione della board.
+    // TODO A tal fine ho previsto il topic /switch_board in cui mandare questa info. Il topic si aspetta
+    // TODO una String che PER ORA ha solo due valori possibili: "outer" e "inner", rispettivamente per la 4x4 esterna
+    // TODO e 4x4 interna. Nel file di launch è già tutto configurato quindi è un operazione da fare subito.
+    // TODO (anche perchè non ha più senso procedere con la vecchia board)
+
+    /* Aggiunto Fra*/
+    // switch_board_pub.publish("outer"); // TODO pubblicare al cambio di altezza
 
     ros::Rate r(50);
     Float64 z_effort;
