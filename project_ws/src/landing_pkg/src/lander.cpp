@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
     // TODO (anche perchè non ha più senso procedere con la vecchia board)
 
     /* Aggiunto Fra*/
-    // switch_board_pub.publish("outer"); // TODO pubblicare al cambio di altezza
+    //switch_board_pub.publish("outer"); // TODO pubblicare al cambio di altezza
 
     ros::Rate r(50);
     Float64 z_effort;
@@ -113,8 +113,8 @@ int main(int argc, char **argv) {
                     break;
                 case descending: {
                     ROS_INFO("Status: Descending. Alt: %lf.",cur_quota);
-                    //if(cur_quota <= switching_board_quote)
-                        //switch_board();
+                    if(cur_quota <= switching_board_quote)
+                        switch_board();
                     if (cur_quota <= landing_quote) {
                         drone_status = landing;
                         break;
@@ -137,8 +137,8 @@ int main(int argc, char **argv) {
                     break;
                 case rising: {
                     ROS_INFO("Status: Rising. Alt: %lf.",cur_quota);
-                    //if(cur_quota > switching_board_quote)
-                        //switch_board();
+                    if(cur_quota > switching_board_quote)
+                        switch_board();
                     if(cur_quota >= recovering_quote) {
                         z_effort.data = 0;
                         drone_status = stabilizing;
