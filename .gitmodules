@@ -4,4 +4,4 @@
 
 [submodule "ar_sys"]
 	path = project_ws/src/ar_sys
-	url = https://github.com/francibon93/ar_sys.git
+	url = https://github.com/francibon93/ar_sys
