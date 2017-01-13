@@ -51,6 +51,11 @@ void z_effort_received(const Float64 &z) {
     last_z_effort = z.data;
 }
 
+// Modifica per disattivare PID da lander
+void cmd_vel_enable_received(const std_msgs::Empty &msg) {
+    enabled = false;
+}
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "main_controller");
     ros::NodeHandle nh;
@@ -77,6 +82,12 @@ int main(int argc, char **argv) {
     sync.registerCallback(&effort_received);
 
     ros::Subscriber z_effort_sub = nh.subscribe("/z_effort", 1, &z_effort_received);
+
+    //Modifica per permettere al lander di disattivare PID
+    ros::Subscriber cmd_vel_enable_sub = nh.subscribe("/cmd_vel_enable", 1, &cmd_vel_enable_received);
+
+    //
+
 
     is_reaching_quota_mode = has_to_reach_quota;
     if (is_reaching_quota_mode) {
@@ -109,7 +120,6 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
         const StampedFloat64ConstPtr& yaw_effort*/) {
     if (!enabled)
         return;
-
     if (!is_transform_setup) {
         try {
             listener->lookupTransform("ardrone_base_link", "ardrone_base_bottomcam", ros::Time(0), transform);
@@ -129,6 +139,7 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
     //next_twist.angular.z = angular.z();
     next_twist.linear.z = last_z_effort;
     last_cmd_vel_time = ros::Time::now();
+    ROS_INFO("MAIN_CONTROLLER: Current zeta effort: %lf", last_z_effort);
 }
 
 void ros_loop_continue(ros::Rate &r) {
