@@ -54,6 +54,8 @@ void landing_boolean_received(const std_msgs::EmptyConstPtr &e);
 
 bool check_landing_conditions();
 
+string current_board = "outer";
+
 void switch_board() {
     std_msgs::String board;
     switch (drone_status) {
@@ -67,8 +69,11 @@ void switch_board() {
             } break;
         ROS_ERROR("Switch board called in state: %d.\n", drone_status);
     }
-
-    switch_board_pub.publish(board);
+    if(current_board != board.data) {
+        switch_board_pub.publish(board);
+        current_board = board.data;
+    }
+    ROS_INFO("============================== Switch Board ==============================");
 }
 
 int main(int argc, char **argv) {
@@ -99,7 +104,6 @@ int main(int argc, char **argv) {
 
     /* Aggiunto Fra*/
     //switch_board_pub.publish("outer"); // TODO pubblicare al cambio di altezza
-
     ros::Rate r(50);
     Float64 z_effort;
     while (ros::ok()) {
@@ -121,6 +125,7 @@ int main(int argc, char **argv) {
                     }
                     if (check_landing_conditions()) {
                         z_effort.data = zeta_land_vel;
+                        ROS_INFO("ZetaLandVel: %lf", zeta_land_vel);
                         z_effort_pub.publish(z_effort);
                     } else {
                         if(cur_quota <= recovering_quote)
@@ -180,6 +185,14 @@ bool check_landing_conditions() {
     double k = 1;
     if(descending == drone_status)
         k = 1.8;
+    if(cur_pose_error.avg_ex >= (k*avg_center_margin))
+        ROS_INFO("Avg eX Error %lf", cur_pose_error.avg_ex);
+    if(cur_pose_error.avg_ey >= (k*avg_center_margin))
+        ROS_INFO("Avg EY Error %lf", cur_pose_error.avg_ey);
+    if(cur_pose_error.avg_dx >= (k*avg_center_margin))
+        ROS_INFO("Avg DX Error %lf", cur_pose_error.avg_dx);
+    if(cur_pose_error.avg_dy >= (k*avg_center_margin))
+        ROS_INFO("Avg Dy Error %lf", cur_pose_error.avg_dy);
     return ((cur_pose_error.ex < (k * center_margin)) && (cur_pose_error.ey < (k * center_margin)) &&
             (cur_pose_error.dx < (k * speed_margin)) && (cur_pose_error.dy < (k * speed_margin)) &&
             (cur_pose_error.avg_ex < (k * avg_center_margin)) && (cur_pose_error.avg_ey < (k * avg_center_margin)) &&

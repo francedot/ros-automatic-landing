@@ -9,7 +9,7 @@
     <arg name="has_to_reach_quota" default="false"/>
 
     <!-- If landing_quota is true, specifies the quota in mm at which the landing phase starts -->
-    <arg name="landing_quota" default="2000"/>
+    <arg name="landing_quota" default="2500"/>
 
     <!-- Specifies the velocity (m/s) of the landing phase-->
     <arg name="zeta_land_vel" default="-0.2"/>
@@ -19,11 +19,11 @@
 
     <arg name="video_rectified" default="false"/>
 
-    <arg name="center_margin" default="0.01"/>
-    <arg name="speed_margin" default="0.014"/>
-    <arg name="avg_center_margin" default="0.06"/>
-    <arg name="avg_speed_margin" default="0.014"/>
-    <arg name="landing_quote" default="220.0"/>
+    <arg name="center_margin" default="0.025"/>
+    <arg name="speed_margin" default="0.02"/>
+    <arg name="avg_center_margin" default="0.4"/>
+    <arg name="avg_speed_margin" default="0.02"/>
+    <arg name="landing_quote" default="250.0"/>
 
     <!-- MONITOR NODES -->
     <node name="error_monitor" type="error_monitor" pkg="landing_pkg" output="screen"/>
