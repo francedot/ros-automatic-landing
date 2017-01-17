@@ -139,7 +139,7 @@ void effort_received(const StampedFloat64ConstPtr &x_effort,
     //next_twist.angular.z = angular.z();
     next_twist.linear.z = last_z_effort;
     last_cmd_vel_time = ros::Time::now();
-    ROS_INFO("MAIN_CONTROLLER: Current zeta effort: %lf", last_z_effort);
+//ROS_INFO("MAIN_CONTROLLER: Current zeta effort: %lf", last_z_effort);
 }
 
 void ros_loop_continue(ros::Rate &r) {

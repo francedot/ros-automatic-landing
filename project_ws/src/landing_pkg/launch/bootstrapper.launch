@@ -19,11 +19,27 @@
 
     <arg name="video_rectified" default="false"/>
 
-    <arg name="center_margin" default="0.025"/>
-    <arg name="speed_margin" default="0.02"/>
-    <arg name="avg_center_margin" default="0.4"/>
-    <arg name="avg_speed_margin" default="0.045"/>
-    <arg name="landing_quote" default="200.0"/>
+    <!-- landing quote -->
+
+    <arg name="landing_quote" default="300.0"/>
+
+    <!-- Parameters for checking conditions during the stabilizing phase -->
+
+    <arg name="stabilizing_center_distance" default="0.02"/>
+    <arg name="stabilizing_speed_difference" default="0.015"/>
+    <arg name="stabilizing_avg_center_distance" default="0.25"/>
+    <arg name="stabilizing_avg_speed_difference" default="0.02"/>
+
+
+    <!-- Parameters for checking conditions during the descending phase -->
+
+    <arg name="descending_center_distance" default="0.025"/>
+    <arg name="descending_speed_difference" default="0.02"/>
+    <arg name="descending_avg_center_distance" default="0.4"/>
+    <arg name="descending_avg_speed_difference" default="0.045"/>
+
+    <arg name="descending_increment_margin" default="1.001"/>
+    <arg name="descending_increment_time" default="100"/>
 
     <!-- MONITOR NODES -->
     <node name="error_monitor" type="error_monitor" pkg="landing_pkg" output="screen"/>
@@ -58,10 +74,15 @@
     </node>
 
     <node name="lander" type="lander" pkg="landing_pkg" output="screen">
-        <param name="center_margin" value="$(arg center_margin)"/>
-        <param name="speed_margin" value="$(arg speed_margin)"/>
-        <param name="avg_center_margin" value="$(arg avg_center_margin)"/>
-        <param name="avg_speed_margin" value="$(arg avg_speed_margin)"/>
+        <param name="stabilizing_center_distance" value="$(arg stabilizing_center_distance)"/>
+        <param name="stabilizing_speed_difference" value="$(arg stabilizing_speed_difference)"/>
+        <param name="stabilizing_avg_center_distance" value="$(arg stabilizing_avg_center_distance)"/>
+        <param name="stabilizing_avg_speed_difference" value="$(arg stabilizing_avg_speed_difference)"/>
+        <param name="descending_center_distance" value="$(arg descending_center_distance)"/>
+        <param name="descending_speed_difference" value="$(arg descending_speed_difference)"/>
+        <param name="descending_avg_center_distance" value="$(arg descending_avg_center_distance)"/>
+        <param name="descending_avg_speed_difference" value="$(arg descending_avg_speed_difference)"/>
+
         <param name="landing_quote" value="$(arg landing_quote)"/>
     </node>
 
