@@ -9,7 +9,7 @@
     <arg name="has_to_reach_quota" default="false"/>
 
     <!-- If landing_quota is true, specifies the quota in mm at which the landing phase starts -->
-    <arg name="landing_quota" default="2500"/>
+    <arg name="landing_quota" default="2000"/>
 
     <!-- Specifies the velocity (m/s) of the landing phase-->
     <arg name="zeta_land_vel" default="-0.2"/>
