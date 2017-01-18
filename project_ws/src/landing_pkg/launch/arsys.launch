@@ -26,7 +26,7 @@
 	<arg name="board_frame_id" default="board1" />
 	<!--Change marker cell size here TODO Antonio: Measure both-->
 	<!--<arg name="marker_size_outer" default="0.009" />-->
-	<arg name="marker_size_outer" default="0.0115" />
+	<arg name="marker_size_outer" default="0.01" />
 	<arg name="marker_size_inner" default="0.005" />
 	<arg name="publish_tf" default="false" />
 
